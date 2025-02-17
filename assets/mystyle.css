@@ -1,0 +1,59 @@
+/*
+style untuk fitur yang belum memakai template
+*/
+*{
+    margin: 0;
+    padding: 0;
+    overflow: 0;
+    font-family:'Segoe UI';
+}
+body{
+    height: 100vh;
+    background-color: rgb(121, 196, 47);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.container{
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 50px;
+    width: 300px;
+    background-color:rgb(255, 255, 255);
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+    border-radius: 20px;
+}
+.container h1{
+    color: rgb(0, 0, 0);
+    text-align: center;
+    border-bottom: 3px solid rgb(31, 169, 13);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+.container label{
+    color: rgb(0, 0, 0);
+    text-align: left;
+}
+.container form input{
+    width: 100%;
+    padding: 2px 4px;
+    margin-bottom: 10px;
+    border: none;
+    font-size: 20px;
+    background-color: rgba(0, 146, 44, 0.616);
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+}
+.container form button{
+    width: 100%;
+    padding: 1px;
+    background-color: rgba(0, 146, 44, 0.616);
+    font-size: 20px;
+    color:rgb(0, 0, 0)  ;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    font-weight: bolder;
+}
+
