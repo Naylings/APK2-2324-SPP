@@ -84,31 +84,18 @@ function cek_role_user($username, $level)
         }
         // strpos digunakan jika user sudah di path file yang sesuai maka kode tidak akan dikerjakan, berguna untuk mencegah redirect loop
 
-        // Jika user level "Owner" dan saat ini tidak berada di folder admin
-        elseif ($level == "Owner" && strpos($current_path, 'owner') === false) {
-            header("location: ../owner/index.php"); // Arahkan ke halaman admin
-            exit(); // Hentikan eksekusi skrip
-        }
+        
         // Jika user level "Admin" dan saat ini tidak berada di folder admin
         elseif ($level == "Admin" && strpos($current_path, 'admin') === false) {
             header("location: ../admin/index.php"); // Arahkan ke halaman admin
             exit(); // Hentikan eksekusi skrip
         }
-        // Jika user level "Penyewa" dan saat ini tidak berada di folder penyewa
-        elseif ($level == "Penyewa" && strpos($current_path, 'penyewa') === false) {
-            header("location: ../penyewa/index.php"); // Arahkan ke halaman penyewa
-            exit(); // Hentikan eksekusi skrip
-        }
+        
         // Jika user level "Petugas" dan saat ini tidak berada di folder petugas
         elseif ($level == "Petugas" && strpos($current_path, 'petugas') === false) {
             header("location: ../petugas/index.php"); // Arahkan ke halaman petugas
             exit(); // Hentikan eksekusi skrip
-        }
-        // Jika user level "Karyawan" dan saat ini tidak berada di folder admin
-        elseif ($level == "Karyawan" && strpos($current_path, 'karyawan') === false) {
-            header("location: ../karyawan/index.php"); // Arahkan ke halaman admin
-            exit(); // Hentikan eksekusi skrip
-        }
+        
     } elseif (!$username && strpos($current_path, 'login') === false) {
         // Jika email tidak ada atau user tidak memiliki level yang sesuai
         header("location: ../index.php");

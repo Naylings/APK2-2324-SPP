@@ -1,0 +1,57 @@
+[33mcommit 88e9afe8ac19e9079b41991628b88b167d3ca381[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Naylings <mnayadz168@gmail.com>
+Date:   Mon Feb 17 12:54:48 2025 +0700
+
+    menambahkan fitur login.php dan logout.php
+    1. membuat file login.php dan logout.php di folder inc
+    2. menambahkan function login dan cek role di file function.php
+
+[33mcommit 010284987489c55dd6f29e55432f47edf643c368[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Naylings <mnayadz168@gmail.com>
+Date:   Mon Feb 17 10:35:12 2025 +0700
+
+    update sop/readme
+
+[33mcommit 6e917268d7cd1849058226a42f43625fd5e0ee0b[m
+Author: Naylings <mnayadz168@gmail.com>
+Date:   Fri Feb 14 09:21:04 2025 +0700
+
+    membuat perencanaan kerja projek
+
+[33mcommit 2fa3d683f63eabacb8c2f6b8ecacbb1f18282ec3[m
+Author: Naylings <mnayadz168@gmail.com>
+Date:   Thu Feb 13 10:42:30 2025 +0700
+
+    pesiapan awal nama file & folder
+
+[33mcommit a43d11c0c7eddf7fc8c120ad9b2e3eca28ca597a[m
+Author: Naylings <mnayadz168@gmail.com>
+Date:   Thu Feb 13 10:25:00 2025 +0700
+
+    menyiapkan file index untuk template admin
+
+[33mcommit 271de612dcc2216f03fa2d9bdccc92d65092625f[m
+Author: Naylings <mnayadz168@gmail.com>
+Date:   Thu Feb 13 08:49:57 2025 +0700
+
+    Create index.php
+    
+    membuat file index -> login aplikasi
+
+[33mcommit 539dacc203a497579798f4594efb18770d00c2fe[m
+Author: Naylings <mnayadz168@gmail.com>
+Date:   Thu Feb 13 08:28:25 2025 +0700
+
+    Update README.md
+
+[33mcommit 4117bb86eb512969e11186875656c5056cf16b76[m
+Author: Naylings <mnayadz168@gmail.com>
+Date:   Thu Feb 13 08:13:57 2025 +0700
+
+    Update README.md
+
+[33mcommit 368d8cf2dacaa9973646694d55b2c83ca61fd918[m
+Author: Naylings <mnayadz168@gmail.com>
+Date:   Thu Feb 13 08:10:29 2025 +0700
+
+    Initial commit
