@@ -101,5 +101,6 @@ function cek_role_user($username, $level)
         header("location: ../index.php");
         exit();
     }
+    }
 }
 ?>
