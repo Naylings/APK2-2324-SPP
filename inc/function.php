@@ -16,16 +16,103 @@ if (!$KONEKSI) {
 }
 
 
+// auto numering
+function  autonum($tabel, $kolom, $lebar = 0, $awalan)
+{
+    global $KONEKSI;
+
+    $auto = mysqli_query($KONEKSI, "SELECT $kolom FROM $tabel  ORDER BY $kolom DESC LIMIT 1") or die(mysqli_error($KONEKSI));
+    $jumlah_record = mysqli_num_rows($auto);
+
+    if ($jumlah_record == 0) {
+        $nomor = 1;
+    } else {
+        $row = mysqli_fetch_array($auto);
+        $nomor = intval(substr($row[0], strlen($awalan))) + 1;
+    }
+
+    if ($lebar > 0) {
+        $angka = $awalan . str_pad($nomor, $lebar, '0', STR_PAD_LEFT);
+    } else {
+        $angka = $awalan . $nomor;
+    }
+    return $angka;
+}
+
+
+// function register
+function registrasi($DATA)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    $nama = stripslashes($DATA["username"]); // untuk cek fOrm register dari input nama
+    $email = strtolower(stripslashes($DATA["email"])); // memastikan fOrm register mengisi input email berupa huruf kecil
+    $auth_id = stripslashes($DATA["auth_id"]);
+    $password = mysqli_real_escape_string($KONEKSI, $DATA["password"]);
+    $password2 = mysqli_real_escape_string($KONEKSI, $DATA["password2"]);
+
+
+    //echo $nama . "|" . $email . "|" . $password . "|" . $password2;
+
+    // cek email yang diinput sudah ada?
+    $result = mysqli_query($KONEKSI, "SELECT email FROM tbl_auth WHERE email='$email'");
+
+    if (mysqli_fetch_assoc($result)) {
+        echo '<script>
+                alert("email sudah digunakan");
+            </script>';
+        return false;
+    }
+
+    // cek pasword
+    if ($password !== $password2) {
+        echo '<script>
+                alert("Password tidak sesuai");
+                document.location.href="register.php";
+            </script>';
+        return false;
+    }
+
+    // encrypt password ke db
+    $password_crypt = password_hash($password, PASSWORD_DEFAULT); // pakai algorithm default hash
+
+
+    //tambah user baru ke tbl_users
+    $SQL_USER = "INSERT INTO tbl_auth SET
+    auth_id = '$auth_id',
+    email = '$email',
+    role = 'Admin',
+    password = '$password_crypt',
+    create_at = '$tgl'";
+
+    mysqli_query($KONEKSI, $SQL_USER) or die("gagal menambah user -->" . mysqli_error($KONEKSI));
+
+    //tambah user baru ke tbl_admin
+    $SQL_ADMIN = "INSERT INTO tbl_user SET
+    auth_id = '$auth_id',
+    nama_user = '$nama',
+    create_at = '$tgl'";
+
+    mysqli_query($KONEKSI, $SQL_ADMIN) or die("gagal menambah user -->" . mysqli_error($KONEKSI));
+
+    echo '<script>
+            document.location.href="login.php"
+        </script>';
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
 function login($DATA)
 {
     global $KONEKSI;
 
-    $username = strtolower(stripslashes($_POST['username'])); // email diinput user
+    $email = strtolower(stripslashes($_POST['email'])); // email diinput user
     $userpass = mysqli_real_escape_string($KONEKSI, $_POST['password']); //pw di input user
 
     // echo $email ." ". $userpass;
     // query ke db
-    $sql = mysqli_query($KONEKSI, "SELECT password, role FROM tbl_auth WHERE username='$username'");
+    $sql = mysqli_query($KONEKSI, "SELECT password, role FROM tbl_auth WHERE email='$email'");
 
     list($paswd, $level) =  mysqli_fetch_array($sql);
 
@@ -41,7 +128,7 @@ function login($DATA)
         if (password_verify($userpass, $paswd)) {
             // kita buat session baru
 
-            $_SESSION['username'] = $username;
+            $_SESSION['username'] = $email;
             $_SESSION['level'] = $level;
 
             /* jika login berhasil, user akan di arahkan sesuai level user
