@@ -3,7 +3,7 @@
 require_once 'function.php';
 
 
-cek_role_user(@$_SESSION['username'], @$_SESSION['level']);
+cek_role_user(@$_SESSION['email'], @$_SESSION['level']);
 
 
 

@@ -5,7 +5,7 @@ require_once "function.php";
 // admin already login check
 
 
-// cek_role_user(@$_SESSION['email'], @$_SESSION['level']);
+cek_role_user(@$_SESSION['email'], @$_SESSION['level']);
 
 // registrasi
 
