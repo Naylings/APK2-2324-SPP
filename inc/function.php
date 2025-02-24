@@ -91,6 +91,7 @@ function registrasi($DATA)
     //tambah user baru ke tbl_admin
     $SQL_ADMIN = "INSERT INTO tbl_user SET
     auth_id = '$auth_id',
+    path_photo = 'user.jpg',
     nama_user = '$nama',
     create_at = '$tgl'";
 
@@ -128,7 +129,7 @@ function login($DATA)
         if (password_verify($userpass, $paswd)) {
             // kita buat session baru
 
-            $_SESSION['username'] = $email;
+            $_SESSION['email'] = $email;
             $_SESSION['level'] = $level;
 
             /* jika login berhasil, user akan di arahkan sesuai level user
@@ -138,9 +139,9 @@ function login($DATA)
 
             if ($_SESSION['level'] == 'Admin') {
                 header('location:../admin/index.php');
-            }  elseif ($_SESSION['level'] == 'Petugas') {
+            } elseif ($_SESSION['level'] == 'Petugas') {
                 header('location:../petugas/index.php');
-            } 
+            }
             die();
         } else {
             echo '<script language="javascript">
@@ -157,10 +158,10 @@ function login($DATA)
 }
 
 
-function cek_role_user($username, $level)
+function cek_role_user($email, $level)
 {
     $current_path = $_SERVER['SCRIPT_NAME']; // Mendapatkan path file yang sedang diakses
-    if ($username) {
+    if ($email) {
         // Cek apakah file yang sedang diakses adalah register.php
         if (strpos($current_path, 'register.php') !== false) {
             // Hanya admin yang boleh mengakses halaman register.php
@@ -171,23 +172,38 @@ function cek_role_user($username, $level)
         }
         // strpos digunakan jika user sudah di path file yang sesuai maka kode tidak akan dikerjakan, berguna untuk mencegah redirect loop
 
-        
+
         // Jika user level "Admin" dan saat ini tidak berada di folder admin
         elseif ($level == "Admin" && strpos($current_path, 'admin') === false) {
             header("location: ../admin/index.php"); // Arahkan ke halaman admin
             exit(); // Hentikan eksekusi skrip
         }
-        
+
         // Jika user level "Petugas" dan saat ini tidak berada di folder petugas
         elseif ($level == "Petugas" && strpos($current_path, 'petugas') === false) {
             header("location: ../petugas/index.php"); // Arahkan ke halaman petugas
             exit(); // Hentikan eksekusi skrip
-        
-    } elseif (!$username && strpos($current_path, 'login') === false) {
+
+        }
+    } elseif (!$email && strpos($current_path, 'login') === false) {
+
         // Jika email tidak ada atau user tidak memiliki level yang sesuai
         header("location: ../index.php");
         exit();
     }
-    }
 }
-?>
+
+
+// function tampil
+function tampil($DATA)
+{
+    global $KONEKSI;
+
+    $hasil = mysqli_query($KONEKSI, $DATA);
+    $rows = []; // siapkan variable/wadah kosong untuk data dari db
+
+    while ($row = mysqli_fetch_assoc($hasil)) {
+        $rows[] = $row; // dimasukkan datanya disini    
+    }
+    return $rows;
+}
