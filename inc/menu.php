@@ -9,6 +9,10 @@ switch ($pages) {
             include "../pages/master/table.php";
             break;
 
+            case 'user':
+                include "../pages/user/user.php";
+                break;
+
     default:
         include "../pages/master/dashboard.php";
         break;
