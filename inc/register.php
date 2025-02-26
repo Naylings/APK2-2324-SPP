@@ -37,6 +37,9 @@ if (isset($_POST["registrasi"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="../assets/images/favicon.ico">
@@ -73,7 +76,7 @@ if (isset($_POST["registrasi"])) {
                         <!-- Logo-->
                         <div class="card-header py-4 text-center bg-primary">
                             <a href="index.html">
-                                <span><img src="../assets/images/logo.png" alt="logo" height="22"></span>
+                                <span><img src="../assets/images/logo.png" alt="logo" height="22"><img src="../assets/images/logo-text.png" alt="logo" height="22"></span>
                             </a>
                         </div>
 

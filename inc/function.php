@@ -207,3 +207,97 @@ function tampil($DATA)
     }
     return $rows;
 }
+
+
+// function update_sekolah
+function update_sekolah($DATA)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    $NAMA = htmlspecialchars($DATA["name"]);
+    $EMAIL = htmlspecialchars($DATA["email"]);
+    $KONTAK = htmlspecialchars($DATA["kontak"]);
+    $ALAMAT = htmlspecialchars($DATA["alamat"]);
+    $ID = htmlspecialchars($DATA["id"]);
+
+
+
+
+
+    // update data ke tbl_admin
+    $sql_admin = "UPDATE tbl_sekolah SET 
+    nama_sekolah='$NAMA',
+    kontak_sekolah='$KONTAK',
+    alamat_sekolah='$ALAMAT',
+    email_sekolah = '$EMAIL' WHERE id_sekolah='$ID' ";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql_admin)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
+// function update_sekolah
+function update_logo($file, $target)
+{
+    global $KONEKSI;
+
+    $namafile = $file['Photo']['name'];
+    $sizefile = $file['Photo']['size'];
+    $error = $file['Photo']['error'];
+    $tmpname = $file['Photo']['tmp_name'];
+
+    // Periksa apakah ada error
+    if ($error != 0) {
+        echo '<script>alert("Terjadi kesalahan saat mengunggah file.");</script>';
+        return false;
+    }
+
+    // Validasi ekstensi file
+    $ekstensi_valid = ['jpeg', 'png', 'jpg', 'bmp'];
+    $ekstensi_file = strtolower(pathinfo($namafile, PATHINFO_EXTENSION));
+
+    if (!in_array($ekstensi_file, $ekstensi_valid)) {
+        echo '<script>alert("Ekstensi file tidak didukung!");</script>';
+        return false;
+    }
+    
+    // Validasi ukuran file
+    if ($sizefile > 2000000) {
+        echo '<script>alert("Ukuran file melebihi 2MB!");</script>';
+        return false;
+    }
+
+
+    $file_path1 = $target . 'favicon.ico';
+    $file_path2 = $target . 'logo.png';
+    $file_path3 = $target . 'logo-dark.png';
+
+
+    if (move_uploaded_file($tmpname, $file_path1)) {
+        copy($file_path1, $file_path2);
+        copy($file_path1, $file_path3) ;
+        echo '<script language="javascript">
+                window.alert("File Berhasil Di Upload");
+            </script>';
+            return true;
+    } else {
+        echo '<script language="javascript">
+                window.alert("File Gagal Di Upload");
+            </script>';
+        return false;
+    }
+
+}
