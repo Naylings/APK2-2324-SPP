@@ -44,7 +44,7 @@ foreach ($sql_login as $user_login) {
 
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico?ver=<?php echo time(); ?>">
 
     <!-- Datatables css -->
     <link href="../assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
@@ -80,24 +80,24 @@ foreach ($sql_login as $user_login) {
                     <!-- Topbar Brand Logo -->
                     <div class="logo-topbar">
                         <!-- Logo light -->
-                        <a href="index.html" class="logo-light">
-                            <span class="logo-lg">
-                                <img src="../assets/images/logo.png" alt="logo">
-                                <img src="../assets/images/logo-text.png" alt="logo">
+                        <a href="index.php" class="logo-light row align-items-center">
+                            <span class="logo-lg ">
+                                <img src="../assets/images/logo.png?ver=<?php echo time(); ?>" alt="logo" height="100%">
+                                <span class="h4"><?= $nama_sekolah ?></span>
                             </span>
-                            <span class="logo-sm">
-                                <img src="../assets/images/logo.png" alt="small logo">
+                            <span class="logo-sm ">
+                                <img src="../assets/images/logo.png?ver=<?php echo time(); ?>" alt="small logo">
                             </span>
                         </a>
 
                         <!-- Logo Dark -->
                         <a href="index.html" class="logo-dark">
                             <span class="logo-lg">
-                                <img src="../assets/images/logo-dark.png" alt="dark logo">
-                                <img src="../assets/images/logo-dark-text.png" alt="dark logo">
+                                <img src="../assets/images/logo-dark.png?ver=<?php echo time(); ?>" alt="dark logo">
+                                <span class="h4"><?= $nama_sekolah ?></span>
                             </span>
                             <span class="logo-sm">
-                                <img src="../assets/images/logo-dark.png" alt="small logo">
+                                <img src="../assets/images/logo-dark.png?ver=<?php echo time(); ?>" alt="small logo">
                             </span>
                         </a>
                     </div>
@@ -203,11 +203,11 @@ foreach ($sql_login as $user_login) {
             <!-- Brand Logo Light -->
             <a href="index.html" class="logo logo-light">
                 <span class="logo-lg">
-                    <img src="../assets/images/logo.png" alt="logo">
-                    <img src="../assets/images/logo-text.png" alt="logo">
+                    <img src="../assets/images/logo.png?ver=<?php echo time(); ?>" alt="logo">
+                    <span class="h4"><?= $nama_sekolah ?></span>
                 </span>
                 <span class="logo-sm">
-                    <img src="../assets/images/logo.png" alt="small logo">
+                    <img src="../assets/images/logo.png?ver=<?php echo time(); ?>" alt="small logo">
                 </span>
             </a>
 
@@ -215,7 +215,7 @@ foreach ($sql_login as $user_login) {
             <a href="index.html" class="logo logo-dark">
                 <span class="logo-lg">
                     <img src="../assets/images/logo-dark.png" alt="dark logo">
-                    <img src="../assets/images/logo-dark-text.png" alt="dark logo">
+                    <span class="h4"><?= $nama_sekolah ?></span>
                 </span>
                 <span class="logo-sm">
                     <img src="../assets/images/logo-dark.png" alt="small logo">
