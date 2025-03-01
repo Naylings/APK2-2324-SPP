@@ -13,6 +13,10 @@ switch ($pages) {
                 include "../pages/user/user.php";
                 break;
 
+                case 'user_admin':
+                    include "../pages/user admin/user.php";
+                    break;
+
     default:
         include "../pages/master/dashboard.php";
         break;

@@ -281,9 +281,10 @@ function tambah_user($data, $file, $target)
     global $KONEKSI;
     global $tgl;
 
-    $START = "";
-    $FINISH = "";
+    $START ;
+    $FINISH ;
     $STATUS = "Inactive";
+    $redirect;
     $ROLE = "Admin";
     $ID = htmlspecialchars($data["kode"]);
     $NAMA = htmlspecialchars($data["name"]);
@@ -294,10 +295,33 @@ function tambah_user($data, $file, $target)
         $FINISH = htmlspecialchars($data["finish"]);
         $STATUS = "Inactive";
         $ROLE = "Petugas";
+    } else {
+        $redirect = "_admin";
     }
     $PASSWORD1 = mysqli_real_escape_string($KONEKSI, $data["password"]);
     $PASSWORD2 = mysqli_real_escape_string($KONEKSI, $data["password2"]);
 
+
+
+    // cek email
+    $result = mysqli_query($KONEKSI, "SELECT email FROM tbl_auth WHERE email='$EMAIL'");
+
+    if (mysqli_fetch_assoc($result)) {
+        echo '<script language="javascript">
+                window.alert("Email Sudah Digunakan");
+                window.document.location.href="?inc=user'.$redirect.'";
+            </script>';
+        return false;
+    }
+
+    // konfirmasi password
+    if ($PASSWORD1 !== $PASSWORD2) {
+        echo '<script language="javascript">
+            window.alert("Password tidak sesuai");
+            window.document.location.href="?inc=user'.$redirect.'";
+        </script>';
+        return false;
+    }
 
     // $GAMBAR = $_FILES['Photo']['tmp_name']; //tangkap data file
 
@@ -313,26 +337,6 @@ function tambah_user($data, $file, $target)
 
     //jika gambar tidak di upload operasi di hentikan
     if (!$gambar_photo) {
-        return false;
-    }
-
-    // cek email
-    $result = mysqli_query($KONEKSI, "SELECT email FROM tbl_auth WHERE email='$EMAIL'");
-
-    if (mysqli_fetch_assoc($result)) {
-        echo '<script language="javascript">
-                window.alert("Email Sudah Digunakan");
-                window.document.location.href="?inc=user";
-            </script>';
-        return false;
-    }
-
-    // konfirmasi password
-    if ($PASSWORD1 !== $PASSWORD2) {
-        echo '<script language="javascript">
-            window.alert("Password tidak sesuai");
-            window.document.location.href="?inc=user";
-        </script>';
         return false;
     }
 
@@ -371,12 +375,18 @@ function edit_user($data, $file, $target)
     global $KONEKSI;
     global $tgl;
 
+    $START ;
+    $FINISH ;
+    $STATUS = "Inactive";
     $ID = htmlspecialchars($_POST["kode"]);
     $NAMA = htmlspecialchars($_POST["name"]);
     $TELEPON = htmlspecialchars($_POST["telepon"]);
+    if ($data["role"] == 1) {
+  
     $START = htmlspecialchars($_POST["start"]);
     $FINISH = htmlspecialchars($_POST["finish"]);
     $STATUS = htmlspecialchars($_POST["status"]);
+    }
     $PHOTO_LAMA = htmlspecialchars($_POST["photo_db"]);
 
 

@@ -28,11 +28,11 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-auto">
-                                <h4 class="header-title"> Data User Petugas</h4>
+                                <h4 class="header-title"> Data User Admin</h4>
                             </div>
                             <div class="col-auto ms-auto">
                                 <div class="btn-group mb-2 ">
-                                    <a role="button" href="?inc=user&aksi=add" class="btn btn-success">Tambah User</a>
+                                    <a role="button" href="?inc=user_admin&aksi=add" class="btn btn-success">Tambah User</a>
                                     <!-- <button type="button" class="btn btn-warning">Warning</button>
                                     <button type="button" class="btn btn-danger">Danger</button> -->
                                 </div>
@@ -47,8 +47,6 @@
                                             <th>Photo</th>
                                             <th>Nama</th>
                                             <th>Telepon</th>
-                                            <th>Status User</th>
-                                            <th>Work Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -58,9 +56,9 @@
                                         <?php
 
 
-                                        $sql_petugas = "SELECT `tbl_auth`.*, `tbl_user`.* FROM `tbl_auth`  LEFT JOIN `tbl_user` ON `tbl_user`.`auth_id` = `tbl_auth`.`auth_id` WHERE role='Petugas' ORDER BY nama_user ASC "; // sql untuk tampil
+                                        $sql_Admin = "SELECT `tbl_auth`.*, `tbl_user`.* FROM `tbl_auth`  LEFT JOIN `tbl_user` ON `tbl_user`.`auth_id` = `tbl_auth`.`auth_id` WHERE role='Admin' ORDER BY nama_user ASC"; // sql untuk tampil
 
-                                        $tampil = tampil($sql_petugas); // panggil tampil sesuai sql
+                                        $tampil = tampil($sql_Admin); // panggil tampil sesuai sql
                                         $no = 1;
                                         foreach ($tampil as $user) :
                                         ?>
@@ -71,14 +69,12 @@
                                                 </td>
                                                 <td><?= $user['nama_user']; ?></td>
                                                 <td><?= $user['telepon_user']; ?></td>
-                                                <td><?= $user['status']; ?></td>
-                                                <td><?= $user['date_start'] . " - " . $user['date_finish']; ?></td>
                                                 <td>
                                                     <div class="dropdown text-center">
                                                         <a href="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="mdi mdi-dots-horizontal"></i></a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="?inc=user&aksi=edit&id=<?= $user['id_user'] ?>">Edit</a>
-                                                            <a class="dropdown-item" href="?inc=user&aksi=delete&id=<?= $user['id_user'] ?>">Delete</a>
+                                                            <a class="dropdown-item" href="?inc=user_admin&aksi=edit&id=<?= $user['id_user'] ?>">Edit</a>
+                                                            <a class="dropdown-item" href="?inc=user_admin&aksi=delete&id=<?= $user['id_user'] ?>">Delete</a>
                                                             <a class="dropdown-item" href="#">View</a>
                                                         </div>
                                                     </div>

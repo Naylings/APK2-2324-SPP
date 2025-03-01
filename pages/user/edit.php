@@ -57,6 +57,7 @@ while ($row = mysqli_fetch_assoc($edit)) {
                         <h4 class="header-title">Edit User Petugas</h4>
                         <form method="post" enctype="multipart/form-data">
                             <input type="hidden" name="kode" value="<?= $id_user ?>">
+                            <input type="hidden" name="role" value="1">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama</label>
                                 <input type="text" class="form-control" id="name" name="name" value="<?= $nama ?>" placeholder="Nama Petugas">
@@ -87,7 +88,7 @@ while ($row = mysqli_fetch_assoc($edit)) {
                                 <div class="mb-3 col-md-6">
                                     <label for="Photo" class="form-label ">Upload Foto</label>
                                     <input type="file" id="Photo" name="Photo" class="form-control mb-3">
-                                    <img src="../assets/images/users/<?= $photo ?>" class="avatar-xl rounded-circle" width="150px" alt="">
+                                    <img src="../assets/images/users/<?= empty($user['path_photo']) ? 'user.jpg' : $user['path_photo']; ?>"" class="avatar-xl rounded-circle" width="150px" alt="">
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <p class="  form-label">Status Petugas</p>
