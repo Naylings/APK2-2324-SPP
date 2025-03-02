@@ -72,7 +72,7 @@ while ($row = mysqli_fetch_assoc($edit)) {
                                     <label for="Photo" class="form-label ">Upload Foto</label>
                                     <input type="hidden" class="form-control" name="photo_db" value="<?php echo $photo; ?>">
                                     <input type="file" id="Photo" name="Photo" class="form-control mb-3">
-                                    <img src="../assets/images/users/<?= empty($user['path_photo']) ? 'user.jpg' : $user['path_photo']; ?>"" class=" avatar-xl rounded-circle" width="150px" alt="">
+                                    <img src="../assets/images/users/<?= empty($photo) ? 'user.jpg' : $photo; ?>" class=" avatar-xl rounded-circle" width="150px" alt="">
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="kontak" class="form-label">Telepon</label>
