@@ -12,6 +12,13 @@ $role = $_SESSION['level'];
 $sql_login = tampil("SELECT `tbl_auth`.*, `tbl_user`.* FROM `tbl_auth` LEFT JOIN `tbl_user` ON `tbl_user`.`auth_id` = `tbl_auth`.`auth_id` WHERE tbl_auth.email='$email';");
 // var_dump ($sql_login);
 
+$sql_sekolah = tampil("SELECT * FROM `tbl_sekolah` WHERE 1");
+foreach ($sql_sekolah as $info_sekolah) {
+    $nama_sekolah = $info_sekolah['nama_sekolah'];
+    $kontak_sekolah = $info_sekolah['kontak_sekolah'];
+    $email_sekolah = $info_sekolah['email_sekolah'];
+    $alamat_sekolah = $info_sekolah['alamat_sekolah'];
+}
 foreach ($sql_login as $user_login) {
     $nama_user = $user_login['nama_user'];
     $photo = $user_login['path_photo'];
@@ -27,13 +34,18 @@ foreach ($sql_login as $user_login) {
 
 <head>
     <meta charset="utf-8" />
-    <title>Datatables | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+
+    <title><?= $nama_sekolah ?> | SPP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico?ver=<?php echo time(); ?>">
 
     <!-- Datatables css -->
     <link href="../assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
@@ -69,22 +81,26 @@ foreach ($sql_login as $user_login) {
                     <!-- Topbar Brand Logo -->
                     <div class="logo-topbar">
                         <!-- Logo light -->
-                        <a href="index.html" class="logo-light">
-                            <span class="logo-lg">
-                                <img src="../assets/images/logo.png" alt="logo">
+
+                        <a href="index.php" class="logo-light row align-items-center">
+                            <span class="logo-lg ">
+                                <img src="../assets/images/logo.png?ver=<?php echo time(); ?>" alt="logo" height="100%">
+                                <span class="h4"><?= $nama_sekolah ?></span>
                             </span>
-                            <span class="logo-sm">
-                                <img src="../assets/images/logo-sm.png" alt="small logo">
+                            <span class="logo-sm ">
+                                <img src="../assets/images/logo.png?ver=<?php echo time(); ?>" alt="small logo">
                             </span>
                         </a>
 
                         <!-- Logo Dark -->
                         <a href="index.html" class="logo-dark">
                             <span class="logo-lg">
-                                <img src="../assets/images/logo-dark.png" alt="dark logo">
+
+                                <img src="../assets/images/logo-dark.png?ver=<?php echo time(); ?>" alt="dark logo">
+                                <span class="h4"><?= $nama_sekolah ?></span>
                             </span>
                             <span class="logo-sm">
-                                <img src="../assets/images/logo-dark-sm.png" alt="small logo">
+                                <img src="../assets/images/logo-dark.png?ver=<?php echo time(); ?>" alt="small logo">
                             </span>
                         </a>
                     </div>
@@ -190,10 +206,11 @@ foreach ($sql_login as $user_login) {
             <!-- Brand Logo Light -->
             <a href="index.html" class="logo logo-light">
                 <span class="logo-lg">
-                    <img src="../assets/images/logo.png" alt="logo">
+                    <img src="../assets/images/logo.png?ver=<?php echo time(); ?>" alt="logo">
+                    <span class="h4"><?= $nama_sekolah ?></span>
                 </span>
                 <span class="logo-sm">
-                    <img src="../assets/images/logo-sm.png" alt="small logo">
+                    <img src="../assets/images/logo.png?ver=<?php echo time(); ?>" alt="small logo">
                 </span>
             </a>
 
@@ -201,15 +218,17 @@ foreach ($sql_login as $user_login) {
             <a href="index.html" class="logo logo-dark">
                 <span class="logo-lg">
                     <img src="../assets/images/logo-dark.png" alt="dark logo">
+                    <span class="h4"><?= $nama_sekolah ?></span>
                 </span>
                 <span class="logo-sm">
-                    <img src="../assets/images/logo-dark-sm.png" alt="small logo">
+                    <img src="../assets/images/logo-dark.png" alt="small logo">
                 </span>
             </a>
 
             <!-- Sidebar Hover Menu Toggle Button -->
             <div class="button-sm-hover" data-bs-toggle="tooltip" data-bs-placement="right" title="Show Full Sidebar">
                 <i class="ri-checkbox-blank-circle-line align-middle"></i>
+
             </div>
 
             <!-- Full Sidebar Menu Close Button -->
@@ -253,9 +272,9 @@ foreach ($sql_login as $user_login) {
                     <li class="side-nav-title">Settings</li>
 
                     <li class="side-nav-item">
-                        <a href="?inc=table" class="side-nav-link">
-                            <i class="ri-home-gear-line"></i>
-                            <span> Company </span>
+                        <a href="?inc=setting" class="side-nav-link">
+                            <i class="mdi mdi-school-outline"></i>
+                            <span> School </span>
                         </a>
                     </li>
 
@@ -292,6 +311,7 @@ foreach ($sql_login as $user_login) {
                             <span> Data Table </span>
                         </a>
                     </li>
+
 
 
                     <li class="side-nav-item">
@@ -403,9 +423,13 @@ foreach ($sql_login as $user_login) {
         <!-- End Page content -->
         <!-- ============================================================== -->
 
+
     </div>
     <!-- END wrapper -->
 
+
+    <!-- Vendor js -->
+    <script src="../assets/js/vendor.min.js"></script>
 
     <!-- Vendor js -->
     <script src="../assets/js/vendor.min.js"></script>
@@ -414,6 +438,12 @@ foreach ($sql_login as $user_login) {
     <script src="../assets/vendor/highlightjs/highlight.pack.min.js"></script>
     <script src="../assets/vendor/clipboard/clipboard.min.js"></script>
     <script src="../assets/js/hyper-syntax.js"></script>
+
+    <!-- Dropzone File Upload js -->
+    <script src="../assets/vendor/dropzone/min/dropzone.min.js"></script>
+
+    <!-- File Upload Demo js -->
+    <script src="../assets/js/ui/component.fileupload.js"></script>
 
     <!-- Datatables js -->
     <script src="../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -433,8 +463,10 @@ foreach ($sql_login as $user_login) {
     <!-- Datatable Demo Aapp js -->
     <script src="../assets/js/pages/demo.datatable-init.js"></script>
 
+
     <!-- App js -->
     <script src="../assets/js/app.min.js"></script>
+
 
 </body>
 
