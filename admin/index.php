@@ -34,6 +34,7 @@ foreach ($sql_login as $user_login) {
 
 <head>
     <meta charset="utf-8" />
+
     <title><?= $nama_sekolah ?> | SPP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -80,6 +81,7 @@ foreach ($sql_login as $user_login) {
                     <!-- Topbar Brand Logo -->
                     <div class="logo-topbar">
                         <!-- Logo light -->
+
                         <a href="index.php" class="logo-light row align-items-center">
                             <span class="logo-lg ">
                                 <img src="../assets/images/logo.png?ver=<?php echo time(); ?>" alt="logo" height="100%">
@@ -93,6 +95,7 @@ foreach ($sql_login as $user_login) {
                         <!-- Logo Dark -->
                         <a href="index.html" class="logo-dark">
                             <span class="logo-lg">
+
                                 <img src="../assets/images/logo-dark.png?ver=<?php echo time(); ?>" alt="dark logo">
                                 <span class="h4"><?= $nama_sekolah ?></span>
                             </span>
@@ -225,6 +228,7 @@ foreach ($sql_login as $user_login) {
             <!-- Sidebar Hover Menu Toggle Button -->
             <div class="button-sm-hover" data-bs-toggle="tooltip" data-bs-placement="right" title="Show Full Sidebar">
                 <i class="ri-checkbox-blank-circle-line align-middle"></i>
+
             </div>
 
             <!-- Full Sidebar Menu Close Button -->
@@ -274,11 +278,29 @@ foreach ($sql_login as $user_login) {
                         </a>
                     </li>
 
+
                     <li class="side-nav-item">
-                        <a href="?inc=table" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#user" aria-expanded="false" aria-controls="user" class="side-nav-link">
                             <i class=" ri-user-line"></i>
                             <span> User </span>
+                            <span class="menu-arrow"></span>
                         </a>
+                        <div class="collapse" id="user">
+                            <ul class="side-nav-second-level">
+
+                            <li class="side-nav-item">
+                                    <a href="?inc=user" class="side-nav-link">
+                                        <span> User Petugas</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="?inc=user_admin" class="side-nav-link">
+                                        <span> User Admin</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
                     </li>
 
                     <li class="side-nav-title">Master</li>
@@ -289,6 +311,7 @@ foreach ($sql_login as $user_login) {
                             <span> Data Table </span>
                         </a>
                     </li>
+
 
 
                     <li class="side-nav-item">
@@ -400,9 +423,13 @@ foreach ($sql_login as $user_login) {
         <!-- End Page content -->
         <!-- ============================================================== -->
 
+
     </div>
     <!-- END wrapper -->
 
+
+    <!-- Vendor js -->
+    <script src="../assets/js/vendor.min.js"></script>
 
     <!-- Vendor js -->
     <script src="../assets/js/vendor.min.js"></script>
@@ -417,7 +444,6 @@ foreach ($sql_login as $user_login) {
 
     <!-- File Upload Demo js -->
     <script src="../assets/js/ui/component.fileupload.js"></script>
-
 
     <!-- Datatables js -->
     <script src="../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -440,6 +466,7 @@ foreach ($sql_login as $user_login) {
 
     <!-- App js -->
     <script src="../assets/js/app.min.js"></script>
+
 
 </body>
 
