@@ -428,8 +428,7 @@ foreach ($sql_login as $user_login) {
     <!-- END wrapper -->
 
 
-    <!-- Vendor js -->
-    <script src="../assets/js/vendor.min.js"></script>
+    
 
     <!-- Vendor js -->
     <script src="../assets/js/vendor.min.js"></script>
