@@ -263,9 +263,9 @@ foreach ($sql_login as $user_login) {
 
 
                     <li class="side-nav-item">
-                        <a href="#" target="_blank" class="side-nav-link">
-                            <i class="uil-globe"></i>
-                            <span> Empty </span>
+                        <a href="?inc=tahun" class="side-nav-link">
+                            <i class="uil-calender"></i>
+                            <span> Tahun & Tahun Ajaran</span>
                         </a>
                     </li>
 
