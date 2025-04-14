@@ -567,3 +567,67 @@ function update_logo($file, $target)
     }
 
 }
+
+function tambah_tahun($data){
+
+    global $KONEKSI;
+    global $tgl;
+
+
+    $NAMA = htmlspecialchars($data["tahun"]);
+    $SIMBOL = htmlspecialchars($data["tahun2"]);
+
+    // echo "<pre>";
+    // print_r($data); // melihat data yang akan diterima
+    // print_r($file); // melihat file yang akan diterima
+    // echo "</pre>";
+
+    // input data ke tabel
+
+    // jika upload berhasil maka insert data ke tabel
+
+    $sql = "INSERT INTO tbl_tahun SET
+    tahun='$NAMA',
+    simbol='$SIMBOL'    ";
+
+    // cek apakah query berhasil
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        return true;
+    } else {
+        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
+        return false;
+    }
+}
+
+function edit_tahun($data)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    $TAHUN = htmlspecialchars($_POST["tahun"]);
+    $SIMBOL = htmlspecialchars($_POST["tahun2"]);
+    $ID = htmlspecialchars($_POST["id"]);
+
+
+    // update data ke tbl_branch
+    $sql = "UPDATE tbl_tahun SET 
+    tahun='$TAHUN',
+    simbol='$SIMBOL' WHERE id_tahun='$ID' ";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}

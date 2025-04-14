@@ -21,6 +21,9 @@ switch ($pages) {
             include "../pages/setting/setting.php";
             break;
     
+            case 'tahun':
+                include "../pages/tahun/tahun.php";
+                break;
 
     default:
         include "../pages/master/dashboard.php";
