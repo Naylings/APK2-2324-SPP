@@ -28,6 +28,10 @@ switch ($pages) {
                 case 'bulan':
                     include "../pages/bulan/bulan.php";
                     break;
+    
+            case 'tahun_ajaran':
+                include "../pages/tahun_ajaran/tahun_ajaran.php";
+                break;
 
     default:
         include "../pages/master/dashboard.php";

@@ -265,7 +265,7 @@ foreach ($sql_login as $user_login) {
                     <li class="side-nav-item">
                         <a href="?inc=tahun" class="side-nav-link">
                             <i class="uil-calender"></i>
-                            <span> Tahun & Tahun Ajaran </span>
+                            <span> Tahun </span>
                         </a>
                     </li>
 
@@ -273,6 +273,13 @@ foreach ($sql_login as $user_login) {
                         <a href="?inc=bulan" class="side-nav-link">
                             <i class="uil-moon"></i>
                             <span> Bulan </span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a href="?inc=tahun_ajaran" class="side-nav-link">
+                            <i class="uil-bell-school"></i>
+                            <span> Tahun Ajaran </span>
                         </a>
                     </li>
 
@@ -295,7 +302,7 @@ foreach ($sql_login as $user_login) {
                         <div class="collapse" id="user">
                             <ul class="side-nav-second-level">
 
-                            <li class="side-nav-item">
+                                <li class="side-nav-item">
                                     <a href="?inc=user" class="side-nav-link">
                                         <span> User Petugas</span>
                                     </a>
@@ -435,7 +442,7 @@ foreach ($sql_login as $user_login) {
     <!-- END wrapper -->
 
 
-    
+
 
     <!-- Vendor js -->
     <script src="../assets/js/vendor.min.js"></script>

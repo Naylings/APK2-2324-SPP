@@ -11,7 +11,7 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                             <li class="breadcrumb-item active">Main</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">Dashboard</a></li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc="; ?>">Dashboard</a></li>
                         </ol>
                     </div>
                     <h4 class="page-title">Dashboard</h4>
