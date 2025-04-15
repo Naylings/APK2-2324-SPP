@@ -11,7 +11,7 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                             <li class="breadcrumb-item active">Admin</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF']; ?>">User/a></li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">User/a></li>
                         </ol>
                     </div>
                     <h4 class="page-title">User</h4>
@@ -29,14 +29,15 @@
                         <h4 class="header-title">Title Data Table</h4>
                         <div class="row">
                             <p class="text-muted font-14 col-md-8">
-                            Paragraph
+                                Paragraph
                             </p>
                             <div class="col-auto ms-auto">
-                            <div class="btn-group mb-2 ">
-                                <a role="button" href="#" class="btn btn-success">Link Success</a>
-                                <button type="button" class="btn btn-warning">Warning</button>
-                                <button type="button" class="btn btn-danger">Danger</button>
-                            </div></div>
+                                <div class="btn-group mb-2 ">
+                                    <a role="button" href="#" class="btn btn-success">Link Success</a>
+                                    <button type="button" class="btn btn-warning">Warning</button>
+                                    <button type="button" class="btn btn-danger">Danger</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane show active" id="alt-pagination-preview">

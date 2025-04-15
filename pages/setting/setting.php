@@ -11,7 +11,7 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                             <li class="breadcrumb-item active">Settings</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF']; ?>">School</a></li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">School</a></li>
                         </ol>
                     </div>
                     <h4 class="page-title">School</h4>
@@ -29,7 +29,7 @@
         }
 
         $sql = "SELECT * FROM tbl_sekolah WHERE id_sekolah='1'";
-        
+
         $edit = tampil($sql);
         foreach ($edit as $row) {
             $id = $row['id_sekolah'];
@@ -52,22 +52,22 @@
                             <div class="row g-2">
                                 <div class="mb-3 col-md-6">
                                     <label for="name" class="form-label">Nama</label>
-                                    <input type="text" class="form-control" id="name" name="name"value="<?= $nama ?>" placeholder="Nama Sekolah">
+                                    <input type="text" class="form-control" id="name" name="name" value="<?= $nama ?>" placeholder="Nama Sekolah">
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="inputEmail4" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4" name="email"value="<?= $email ?>" placeholder="Email Sekolah">
+                                    <input type="email" class="form-control" id="inputEmail4" name="email" value="<?= $email ?>" placeholder="Email Sekolah">
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="kontak" class="form-label">Kontak</label>
-                                <input type="number" class="form-control" id="kontak" name="kontak"value="<?= $kontak ?>" placeholder="Kontak Sekolah">
+                                <input type="number" class="form-control" id="kontak" name="kontak" value="<?= $kontak ?>" placeholder="Kontak Sekolah">
                             </div>
 
                             <div class="mb-3">
                                 <label for="Alamat" class="form-label">Alamat</label>
-                                <input type="text" class="form-control" id="Alamat" name="alamat"value="<?= $alamat ?>" placeholder="Alamat Sekolah">
+                                <input type="text" class="form-control" id="Alamat" name="alamat" value="<?= $alamat ?>" placeholder="Alamat Sekolah">
                             </div>
 
 

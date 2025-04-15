@@ -11,10 +11,10 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                             <li class="breadcrumb-item active">Kategori</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF']; ?>">Tahun</a></li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">Tahun</a></li>
                         </ol>
                     </div>
-                    <h4 class="page-title">User</h4>
+                    <h4 class="page-title">Tahun & Tahun ajaran</h4>
                 </div>
             </div>
         </div>
@@ -25,6 +25,9 @@
         }
         if (isset($_POST['edit'])) {
             include "proses_edit.php";
+        }
+        if (isset($_POST['hapus'])) {
+            include "proses hapus.php";
         }
         ?>
         <div class="row">
@@ -76,8 +79,8 @@
                                                     <div class="dropdown text-center">
                                                         <a href="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-tahun-<?= $user['simbol']; ?>">Edit</button>
-                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#hapus-tahun-<?= $user['simbol']; ?>">Delete</button>
+                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-tahun-<?= $user['simbol']; ?>">Edit</button>
+                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#hapus-tahun-<?= $user['simbol']; ?>">Delete</button>
                                                             <a class="dropdown-item" href="#">View</a>
                                                         </div>
                                                     </div>

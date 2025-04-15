@@ -11,7 +11,7 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                             <li class="breadcrumb-item active">Settings</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF']; ?>">User</a></li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">User</a></li>
                         </ol>
                     </div>
                     <h4 class="page-title">User</h4>
@@ -71,7 +71,7 @@
                                                 <td><?= $user['telepon_user']; ?></td>
                                                 <td>
                                                     <div class="dropdown text-center">
-                                                        <a href="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="mdi mdi-dots-horizontal"></i></a>
+                                                        <a href="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                             <a class="dropdown-item" href="?inc=user_admin&aksi=edit&id=<?= $user['id_user'] ?>">Edit</a>
                                                             <a class="dropdown-item" href="?inc=user_admin&aksi=delete&id=<?= $user['id_user'] ?>">Delete</a>

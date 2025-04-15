@@ -35,7 +35,7 @@ while ($row = mysqli_fetch_assoc($edit)) {
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                             <li class="breadcrumb-item active">Settings</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF']; ?>">User</a></li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">User</a></li>
                         </ol>
                     </div>
                     <h4 class="page-title">User Petugas</h4>
@@ -98,7 +98,7 @@ while ($row = mysqli_fetch_assoc($edit)) {
                                             <label class="form-check-label" for="Active">Active</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                        <input type="hidden" class="form-control" name="photo_db" value="<?php echo $photo; ?>">
+                                            <input type="hidden" class="form-control" name="photo_db" value="<?php echo $photo; ?>">
                                             <input type="radio" id="Inactive" name="status" class="form-check-input" value="Inactive" <?= $status == "Inactive" ? 'checked' : ""; ?>>
                                             <label class="form-check-label" for="Inactive">Inactive</label>
                                         </div>

@@ -10,31 +10,41 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                            <li class="breadcrumb-item active">Settings</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">User</a></li>
+                            <li class="breadcrumb-item active">Kategori</li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">Bulan</a></li>
                         </ol>
                     </div>
-                    <h4 class="page-title">User</h4>
+                    <h4 class="page-title">Bulan</h4>
                 </div>
             </div>
         </div>
         <!-- end page title -->
-
-
-
+        <?php
+        if (isset($_POST['tambah'])) {
+            include "proses_tambah.php";
+        }
+        if (isset($_POST['edit'])) {
+            include "proses_edit.php";
+        }
+        if (isset($_POST['hapus'])) {
+            include "proses hapus.php";
+        }
+        ?>
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-auto">
-                                <h4 class="header-title"> Data User Petugas</h4>
+                                <h4 class="header-title"> Data Bulan</h4>
                             </div>
                             <div class="col-auto ms-auto">
                                 <div class="btn-group mb-2 ">
-                                    <a role="button" href="?inc=user&aksi=add" class="btn btn-success">Tambah User</a>
+                                    <!-- <a role="button" href="?inc=bulan&aksi=add" class="btn btn-success">Tambah bulan</a> -->
                                     <!-- <button type="button" class="btn btn-warning">Warning</button>
                                     <button type="button" class="btn btn-danger">Danger</button> -->
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#tambah-bulan">Tambah bulan</button>
+
                                 </div>
                             </div>
                         </div>
@@ -44,11 +54,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Photo</th>
-                                            <th>Nama</th>
-                                            <th>Telepon</th>
-                                            <th>Status User</th>
-                                            <th>Work Date</th>
+                                            <th>bulan</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -58,33 +64,32 @@
                                         <?php
 
 
-                                        $sql_petugas = "SELECT `tbl_auth`.*, `tbl_user`.* FROM `tbl_auth`  LEFT JOIN `tbl_user` ON `tbl_user`.`auth_id` = `tbl_auth`.`auth_id` WHERE role='Petugas' ORDER BY nama_user ASC "; // sql untuk tampil
+                                        $sql_bulan = "SELECT * FROM `tbl_bulan` ORDER BY no_bulan ASC"; // sql untuk tampil
 
-                                        $tampil = tampil($sql_petugas); // panggil tampil sesuai sql
+                                        $tampil = tampil($sql_bulan); // panggil tampil sesuai sql
                                         $no = 1;
                                         foreach ($tampil as $user) :
                                         ?>
                                             <tr>
-                                                <td><?= $no++; ?></td>
-                                                <td class="table-user">
-                                                    <img src="../assets/images/users/<?= empty($user['path_photo']) ? 'user.jpg' : $user['path_photo']; ?>" alt="table-user" class="me-2 rounded-circle">
-                                                </td>
-                                                <td><?= $user['nama_user']; ?></td>
-                                                <td><?= $user['telepon_user']; ?></td>
-                                                <td><?= $user['status']; ?></td>
-                                                <td><?= $user['date_start'] . " - " . $user['date_finish']; ?></td>
+                                                <td><?= $user['no_bulan']; ?></td>
+                                                <td><?= $user['nama_bulan']; ?></td>
                                                 <td>
                                                     <div class="dropdown text-center">
                                                         <a href="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="?inc=user&aksi=edit&id=<?= $user['id_user'] ?>">Edit</a>
-                                                            <a class="dropdown-item" href="?inc=user&aksi=delete&id=<?= $user['id_user'] ?>">Delete</a>
+                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-bulan-<?= $user['no_bulan']; ?>">Edit</button>
+                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#hapus-bulan-<?= $user['no_bulan']; ?>">Delete</button>
                                                             <a class="dropdown-item" href="#">View</a>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
-                                        <?php endforeach; ?>
+                                        <?php
+                                            include "edit1.php";
+                                            include "hapus1.php";
+                                            $no++;
+                                        endforeach;
+                                        ?>
                                     </tbody>
                                 </table>
                             </div> <!-- end preview-->
@@ -100,3 +105,7 @@
     </div> <!-- container -->
 
 </div> <!-- content -->
+<?php
+include "tambah1.php";
+
+?>
