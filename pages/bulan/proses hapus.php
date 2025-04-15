@@ -2,7 +2,7 @@
 require_once "../inc/function.php";
 
 
-hapus_tahun($_POST);
+hapus_bulan($_POST);
 
 echo "Proses Hapus Data Berhasil...."
 
@@ -11,4 +11,4 @@ echo "Proses Hapus Data Berhasil...."
 
 
 ?>
-<meta http-equiv="refresh" content="1; url=index.php?inc=tahun">
+<meta http-equiv="refresh" content="1; url=index.php?inc=bulan">

@@ -11,7 +11,7 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                             <li class="breadcrumb-item active">Settings</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF']; ?>">User</a></li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">User</a></li>
                         </ol>
                     </div>
                     <h4 class="page-title">User Admin</h4>
@@ -33,8 +33,8 @@
                     <div class="card-body">
                         <h4 class="header-title">Tambah User Admin</h4>
                         <form method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="kode" value="<?php echo autonum("tbl_auth", "auth_id", 6, "AUTH"); ?>">
-                        <input type="hidden" name="role" value="0">
+                            <input type="hidden" name="kode" value="<?php echo autonum("tbl_auth", "auth_id", 6, "AUTH"); ?>">
+                            <input type="hidden" name="role" value="0">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Nama Admin">

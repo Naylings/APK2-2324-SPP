@@ -631,3 +631,97 @@ function edit_tahun($data)
 
     return mysqli_affected_rows($KONEKSI);
 }
+
+function hapus_tahun($data)
+{
+    global $KONEKSI;
+    $id = $data['id'];
+
+
+    $query = "DELETE FROM tbl_tahun WHERE id_tahun='$id'";
+
+    if (mysqli_query($KONEKSI, $query) ) {
+        echo '<script language="javascript">
+    window.alert("Data Berhasil Di Hapus");
+    </script>';
+    }
+}
+
+function tambah_bulan($data){
+
+    global $KONEKSI;
+    global $tgl;
+
+
+    $NO = htmlspecialchars($_POST["bulan"]);
+    $BULAN = htmlspecialchars($_POST["bulan2"]);
+
+    // echo "<pre>";
+    // print_r($data); // melihat data yang akan diterima
+    // print_r($file); // melihat file yang akan diterima
+    // echo "</pre>";
+
+    // input data ke tabel
+
+    // jika upload berhasil maka insert data ke tabel
+
+    $sql = "INSERT INTO tbl_bulan SET
+    no_bulan='$NO',
+    nama_bulan='$BULAN' ";
+
+    // cek apakah query berhasil
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        return true;
+    } else {
+        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
+        return false;
+    }
+}
+
+function edit_bulan($data)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    $NO = htmlspecialchars($data["bulan"]);
+    $BULAN = htmlspecialchars($data["bulan2"]);
+    $ID = htmlspecialchars($data["id"]);
+
+
+    // update data ke tbl_branch
+    $sql = "UPDATE tbl_bulan SET 
+    no_bulan='$NO',
+    nama_bulan='$BULAN' WHERE id_bulan='$ID' ";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
+function hapus_bulan($data)
+{
+    global $KONEKSI;
+    $id = $data['id'];
+
+
+    $query = "DELETE FROM tbl_bulan WHERE id_bulan='$id'";
+
+    if (mysqli_query($KONEKSI, $query) ) {
+        echo '<script language="javascript">
+    window.alert("Data Berhasil Di Hapus");
+    </script>';
+    }
+}
