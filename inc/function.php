@@ -725,3 +725,109 @@ function hapus_bulan($data)
     </script>';
     }
 }
+
+function tambah_tahun_ajaran($data){
+
+    global $KONEKSI;
+    global $tgl;
+
+
+    $TAHUN1 = htmlspecialchars($data["tahun"]);
+    $TAHUN2 = htmlspecialchars($data["tahun2"]);
+
+    // echo "<pre>";
+    // print_r($data); // melihat data yang akan diterima
+    // print_r($file); // melihat file yang akan diterima
+    // echo "</pre>";   
+
+    // input data ke tabel
+
+    // jika upload berhasil maka insert data ke tabel
+
+        $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN1'");
+        foreach ($tahun as $key ) {
+            $ganjil = $key['tahun'];
+            $simbol1 = $key['simbol'];
+        }
+        $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN2'");
+        foreach ($tahun as $key ) {
+            $genap = $key['tahun'];
+            $simbol2 = $key['simbol'];
+        }
+        $SIMBOL = $simbol1.$simbol2;
+
+    $sql = "INSERT INTO tbl_tahun_ajaran SET
+    semester_ganjil='$ganjil',
+    semester_genap='$genap',
+    simbol_tahun_ajaran='$SIMBOL'";
+
+    // cek apakah query berhasil
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        return true;
+    } else {
+        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
+        return false;
+    }
+}
+
+function edit_tahun_ajaran($data)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    $TAHUN1 = htmlspecialchars($_POST["tahun"]);
+    $TAHUN2 = htmlspecialchars($_POST["tahun2"]);
+    $ID = htmlspecialchars($_POST["id"]);
+
+
+    $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN1'");
+    foreach ($tahun as $key ) {
+        $ganjil = $key['tahun'];
+        $simbol1 = $key['simbol'];
+    }
+    $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN2'");
+    foreach ($tahun as $key ) {
+        $genap = $key['tahun'];
+        $simbol2 = $key['simbol'];
+    }
+    $SIMBOL = $simbol1.$simbol2;
+
+
+    // update data ke tbl_branch
+    $sql = "UPDATE tbl_tahun_ajaran SET 
+    simbol_tahun_ajaran='$SIMBOL',
+    semester_ganjil='$ganjil',
+    semester_genap='$genap' WHERE id_tahun_ajaran='$ID' ";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
+function hapus_tahun_ajaran($data)
+{
+    global $KONEKSI;
+    $id = $data['id'];
+
+
+    $query = "DELETE FROM tbl_tahun_ajaran WHERE id_tahun_ajaran='$id'";
+
+    if (mysqli_query($KONEKSI, $query) ) {
+        echo '<script language="javascript">
+    window.alert("Data Berhasil Di Hapus");
+    </script>';
+    }
+}

@@ -11,15 +11,16 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                             <li class="breadcrumb-item active">Kategori</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">Tahun</a></li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">Tahun Ajaran</a></li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Tahun </h4>
+                    <h4 class="page-title">Tahun Ajaran</h4>
                 </div>
             </div>
         </div>
         <!-- end page title -->
         <?php
+        $tahun = tampil("SELECT * FROM `tbl_tahun` ORDER BY tahun ASC");
         if (isset($_POST['tambah'])) {
             include "proses_tambah.php";
         }
@@ -36,14 +37,14 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-auto">
-                                <h4 class="header-title"> Data Tahun</h4>
+                                <h4 class="header-title"> Data Tahun Ajaran</h4>
                             </div>
                             <div class="col-auto ms-auto">
                                 <div class="btn-group mb-2 ">
                                     <!-- <a role="button" href="?inc=tahun&aksi=add" class="btn btn-success">Tambah Tahun</a> -->
                                     <!-- <button type="button" class="btn btn-warning">Warning</button>
                                     <button type="button" class="btn btn-danger">Danger</button> -->
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#tambah-tahun">Tambah Tahun</button>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#tambah-tahun_ajaran">Tambah Tahun Ajaran</button>
 
                                 </div>
                             </div>
@@ -54,7 +55,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Tahun</th>
+                                            <th>Tahun Ajaran</th>
                                             <th>Simbol</th>
                                             <th>Action</th>
                                         </tr>
@@ -65,7 +66,7 @@
                                         <?php
 
 
-                                        $sql_tahun = "SELECT * FROM `tbl_tahun` ORDER BY tahun ASC"; // sql untuk tampil
+                                        $sql_tahun = "SELECT * FROM `tbl_tahun_ajaran` ORDER BY simbol_tahun_ajaran ASC"; // sql untuk tampil
 
                                         $tampil = tampil($sql_tahun); // panggil tampil sesuai sql
                                         $no = 1;
@@ -73,14 +74,14 @@
                                         ?>
                                             <tr>
                                                 <td><?= $no; ?></td>
-                                                <td><?= $user['tahun']; ?></td>
-                                                <td><?= $user['simbol']; ?></td>
+                                                <td><?= $user['semester_ganjil']; ?> - <?= $user['semester_genap']; ?></td>
+                                                <td><?= $user['simbol_tahun_ajaran']; ?></td>
                                                 <td>
                                                     <div class="dropdown text-center">
                                                         <a href="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-tahun-<?= $user['simbol']; ?>">Edit</button>
-                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#hapus-tahun-<?= $user['simbol']; ?>">Delete</button>
+                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-tahun_ajaran-<?= $user['simbol_tahun_ajaran']; ?>">Edit</button>
+                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#hapus-tahun_ajaran-<?= $user['simbol_tahun_ajaran']; ?>">Delete</button>
                                                             <a class="dropdown-item" href="#">View</a>
                                                         </div>
                                                     </div>
