@@ -277,6 +277,13 @@ foreach ($sql_login as $user_login) {
                     </li>
 
                     <li class="side-nav-item">
+                        <a href="?inc=jurusan" class="side-nav-link">
+                            <i class="uil-book-open"></i>
+                            <span> Jurusan </span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a href="?inc=tahun_ajaran" class="side-nav-link">
                             <i class="uil-bell-school"></i>
                             <span> Tahun Ajaran </span>
