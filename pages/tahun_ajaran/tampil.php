@@ -57,6 +57,7 @@
                                             <th>No</th>
                                             <th>Tahun Ajaran</th>
                                             <th>Simbol</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -76,6 +77,7 @@
                                                 <td><?= $no; ?></td>
                                                 <td><?= $user['semester_ganjil']; ?> - <?= $user['semester_genap']; ?></td>
                                                 <td><?= $user['simbol_tahun_ajaran']; ?></td>
+                                                <td><?= $user['status']; ?></td>
                                                 <td>
                                                     <div class="dropdown text-center">
                                                         <a href="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>

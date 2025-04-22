@@ -1,5 +1,5 @@
 <div id="edit-tahun_ajaran-<?= $user['simbol_tahun_ajaran']; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="standard-modalLabel">Edit Tahun Ajaran</h4>
@@ -9,7 +9,7 @@
                 <div class="modal-body">
                     <div class="row g-2">
                         <input type="hidden" name="id" value="<?= $user['id_tahun_ajaran']; ?>">
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-5">
 
                             <label for="tahun" class="form-label">Tahun Semester Ganjil</label>
                             <select class="form-select" id="tahun" name="tahun">
@@ -43,12 +43,12 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-5">
                             <label for="tahun2" class="form-label">Tahun Semester Genap</label>
                             <select class="form-select" id="tahun2" name="tahun2">
                                 <?php
                                 $yearlist = tampil("SELECT semester_genap FROM tbl_tahun_ajaran WHERE semester_genap != '" . $user['semester_genap'] . "'");
-                                
+
                                 $usedyearList = [];
 
                                 foreach ($yearlist as $row) {
@@ -71,11 +71,21 @@
                                 ?>
                                     <option value="<?= $key['id_tahun'] ?>" <?= $selected ?>><?= $key['tahun'] ?></option>
                                 <?php
-                                $selected = "";
+                                    $selected = "";
                                 endforeach;
                                 ?>
                             </select>
                         </div>
+                        <div class="mb-3 col-md-2">
+                        <label for="customSwitch1" class="form-label">Aktif</label>
+                            <div class="form-check form-switch">
+                                <input type="hidden" name="status" value="Inactive">
+                                <input type="checkbox" class="form-check-input" id="customSwitch1" name="status" value="Active"
+                                    <?= $user['status'] == 'Active' ? 'checked' : ''; ?>>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">

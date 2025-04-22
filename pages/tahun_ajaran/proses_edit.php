@@ -5,6 +5,7 @@ require_once '../inc/function.php';
 $TAHUN1 = htmlspecialchars($_POST["tahun"]);
 $TAHUN2 = htmlspecialchars($_POST["tahun2"]);
 $ID = htmlspecialchars($_POST["id"]);
+$STATUS = htmlspecialchars($_POST["status"]);
 
 $sama = $TAHUN1 == $TAHUN2;
 
@@ -19,6 +20,15 @@ $sama = $TAHUN1 == $TAHUN2;
 //         $used = 1;
 //     }
 // }
+
+$tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN1'");
+foreach ($tahun as $key) {
+    $TAHUN1 = $key['tahun'];
+}
+$tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN2'");
+foreach ($tahun as $key) {
+    $TAHUN2 = $key['tahun'];
+}
 
 $tahun2 = tampil("SELECT * FROM `tbl_tahun_ajaran` WHERE id_tahun_ajaran = '$ID'");
 $same = 0;
@@ -35,7 +45,7 @@ foreach ($tahun2 as $row) {
 
 // echo $ID . " | " . $NAMA . " | " . $EMAIL . " | " . $ROLE. " | " . $TELEPON. " | " . $PASSWORD1. " | " . $PASSWORD2;
 
-if (empty($TAHUN1) || empty($TAHUN2)) {
+if (empty($TAHUN1) || empty($TAHUN2) || empty($STATUS)) {
 ?>
     <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>

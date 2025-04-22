@@ -281,8 +281,8 @@ function tambah_user($data, $file, $target)
     global $KONEKSI;
     global $tgl;
 
-    $START ;
-    $FINISH ;
+    $START;
+    $FINISH;
     $STATUS = "Inactive";
     $redirect;
     $ROLE = "Admin";
@@ -309,7 +309,7 @@ function tambah_user($data, $file, $target)
     if (mysqli_fetch_assoc($result)) {
         echo '<script language="javascript">
                 window.alert("Email Sudah Digunakan");
-                window.document.location.href="?inc=user'.$redirect.'";
+                window.document.location.href="?inc=user' . $redirect . '";
             </script>';
         return false;
     }
@@ -318,7 +318,7 @@ function tambah_user($data, $file, $target)
     if ($PASSWORD1 !== $PASSWORD2) {
         echo '<script language="javascript">
             window.alert("Password tidak sesuai");
-            window.document.location.href="?inc=user'.$redirect.'";
+            window.document.location.href="?inc=user' . $redirect . '";
         </script>';
         return false;
     }
@@ -375,17 +375,17 @@ function edit_user($data, $file, $target)
     global $KONEKSI;
     global $tgl;
 
-    $START ;
-    $FINISH ;
+    $START;
+    $FINISH;
     $STATUS = "Inactive";
     $ID = htmlspecialchars($_POST["kode"]);
     $NAMA = htmlspecialchars($_POST["name"]);
     $TELEPON = htmlspecialchars($_POST["telepon"]);
     if ($data["role"] == 1) {
-  
-    $START = htmlspecialchars($_POST["start"]);
-    $FINISH = htmlspecialchars($_POST["finish"]);
-    $STATUS = htmlspecialchars($_POST["status"]);
+
+        $START = htmlspecialchars($_POST["start"]);
+        $FINISH = htmlspecialchars($_POST["finish"]);
+        $STATUS = htmlspecialchars($_POST["status"]);
     }
     $PHOTO_LAMA = htmlspecialchars($_POST["photo_db"]);
 
@@ -460,7 +460,7 @@ function hapus_user($data, $target)
 
     $photo = $row['path_photo'];
     $auth_id = $row['auth_id'];
-    
+
     if (!$photo == "") {
         unlink($target . $photo);
     }
@@ -539,7 +539,7 @@ function update_logo($file, $target)
         echo '<script>alert("Ekstensi file tidak didukung!");</script>';
         return false;
     }
-    
+
     // Validasi ukuran file
     if ($sizefile > 2000000) {
         echo '<script>alert("Ukuran file melebihi 2MB!");</script>';
@@ -554,21 +554,21 @@ function update_logo($file, $target)
 
     if (move_uploaded_file($tmpname, $file_path1)) {
         copy($file_path1, $file_path2);
-        copy($file_path1, $file_path3) ;
+        copy($file_path1, $file_path3);
         echo '<script language="javascript">
                 window.alert("File Berhasil Di Upload");
             </script>';
-            return true;
+        return true;
     } else {
         echo '<script language="javascript">
                 window.alert("File Gagal Di Upload");
             </script>';
         return false;
     }
-
 }
 
-function tambah_tahun($data){
+function tambah_tahun($data)
+{
 
     global $KONEKSI;
     global $tgl;
@@ -640,14 +640,15 @@ function hapus_tahun($data)
 
     $query = "DELETE FROM tbl_tahun WHERE id_tahun='$id'";
 
-    if (mysqli_query($KONEKSI, $query) ) {
+    if (mysqli_query($KONEKSI, $query)) {
         echo '<script language="javascript">
     window.alert("Data Berhasil Di Hapus");
     </script>';
     }
 }
 
-function tambah_bulan($data){
+function tambah_bulan($data)
+{
 
     global $KONEKSI;
     global $tgl;
@@ -719,14 +720,15 @@ function hapus_bulan($data)
 
     $query = "DELETE FROM tbl_bulan WHERE id_bulan='$id'";
 
-    if (mysqli_query($KONEKSI, $query) ) {
+    if (mysqli_query($KONEKSI, $query)) {
         echo '<script language="javascript">
     window.alert("Data Berhasil Di Hapus");
     </script>';
     }
 }
 
-function tambah_tahun_ajaran($data){
+function tambah_tahun_ajaran($data)
+{
 
     global $KONEKSI;
     global $tgl;
@@ -744,21 +746,26 @@ function tambah_tahun_ajaran($data){
 
     // jika upload berhasil maka insert data ke tabel
 
-        $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN1'");
-        foreach ($tahun as $key ) {
-            $ganjil = $key['tahun'];
-            $simbol1 = $key['simbol'];
-        }
-        $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN2'");
-        foreach ($tahun as $key ) {
-            $genap = $key['tahun'];
-            $simbol2 = $key['simbol'];
-        }
-        $SIMBOL = $simbol1.$simbol2;
+    $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN1'");
+    foreach ($tahun as $key) {
+        $ganjil = $key['tahun'];
+        $simbol1 = $key['simbol'];
+    }
+    $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN2'");
+    foreach ($tahun as $key) {
+        $genap = $key['tahun'];
+        $simbol2 = $key['simbol'];
+    }
+    $SIMBOL = $simbol1 . $simbol2;
+
+    $sql1 = "UPDATE tbl_tahun_ajaran SET 
+    status='Inactive'  ";
+    mysqli_query($KONEKSI, $sql1);
 
     $sql = "INSERT INTO tbl_tahun_ajaran SET
     semester_ganjil='$ganjil',
     semester_genap='$genap',
+    status='Active',
     simbol_tahun_ajaran='$SIMBOL'";
 
     // cek apakah query berhasil
@@ -776,29 +783,36 @@ function edit_tahun_ajaran($data)
     global $KONEKSI;
     global $tgl;
 
-    $TAHUN1 = htmlspecialchars($_POST["tahun"]);
-    $TAHUN2 = htmlspecialchars($_POST["tahun2"]);
-    $ID = htmlspecialchars($_POST["id"]);
+    $TAHUN1 = htmlspecialchars($data["tahun"]);
+    $TAHUN2 = htmlspecialchars($data["tahun2"]);
+    $ID = htmlspecialchars($data["id"]);
+    $STATUS = htmlspecialchars($data["status"]);
 
 
     $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN1'");
-    foreach ($tahun as $key ) {
+    foreach ($tahun as $key) {
         $ganjil = $key['tahun'];
         $simbol1 = $key['simbol'];
     }
     $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN2'");
-    foreach ($tahun as $key ) {
+    foreach ($tahun as $key) {
         $genap = $key['tahun'];
         $simbol2 = $key['simbol'];
     }
-    $SIMBOL = $simbol1.$simbol2;
+    $SIMBOL = $simbol1 . $simbol2;
+if ($STATUS == "Active") {
+    $sql1 = "UPDATE tbl_tahun_ajaran SET 
+    status='Inactive'  ";
+    mysqli_query($KONEKSI, $sql1);
+}
 
 
     // update data ke tbl_branch
     $sql = "UPDATE tbl_tahun_ajaran SET 
     simbol_tahun_ajaran='$SIMBOL',
     semester_ganjil='$ganjil',
-    semester_genap='$genap' WHERE id_tahun_ajaran='$ID' ";
+    semester_genap='$genap',
+    status='$STATUS' WHERE id_tahun_ajaran='$ID' ";
 
 
 
@@ -825,14 +839,15 @@ function hapus_tahun_ajaran($data)
 
     $query = "DELETE FROM tbl_tahun_ajaran WHERE id_tahun_ajaran='$id'";
 
-    if (mysqli_query($KONEKSI, $query) ) {
+    if (mysqli_query($KONEKSI, $query)) {
         echo '<script language="javascript">
     window.alert("Data Berhasil Di Hapus");
     </script>';
     }
 }
 
-function tambah_jurusan($data){
+function tambah_jurusan($data)
+{
 
     global $KONEKSI;
     global $tgl;
@@ -904,7 +919,7 @@ function hapus_jurusan($data)
 
     $query = "DELETE FROM tbl_jurusan WHERE id_jurusan='$id'";
 
-    if (mysqli_query($KONEKSI, $query) ) {
+    if (mysqli_query($KONEKSI, $query)) {
         echo '<script language="javascript">
     window.alert("Data Berhasil Di Hapus");
     </script>';
