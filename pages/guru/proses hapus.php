@@ -2,8 +2,8 @@
 require_once "../inc/function.php";
 
 
-$target = "../assets/images/users/";
-hapus_user($_GET, $target);
+$target = "../assets/images/warga_sekolah/";
+hapus_guru($_GET, $target);
 
 echo "Proses Hapus Data Berhasil...."
 
@@ -12,4 +12,4 @@ echo "Proses Hapus Data Berhasil...."
 
 
 ?>
-<meta http-equiv="refresh" content="1; url=index.php?inc=user">
+<meta http-equiv="refresh" content="1; url=index.php?inc=guru">

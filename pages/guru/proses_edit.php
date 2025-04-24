@@ -2,7 +2,7 @@
 ob_start();
 require_once '../inc/function.php';
 
-$target = "../assets/images/users/";
+$target = "../assets/images/warga_sekolah/";
 $ID = htmlspecialchars($_POST["kode"]);
 $NAMA = htmlspecialchars($_POST["name"]);
 $TELEPON = htmlspecialchars($_POST["telepon"]);
@@ -28,12 +28,12 @@ if (empty($NAMA) || empty($ID) || empty($TELEPON)   || empty($STATUS)  || empty(
     </div>
     <?php
 } else {
-    if (edit_user($_POST, $_FILES, $target) > 0) {
+    if (edit_guru($_POST, $_FILES, $target) > 0) {
     ?>
         <div class="alert alert-success  text-bg-success border-0 fade show" role="alert">
             Data Berhasil Diubah
         </div>
-        <meta http-equiv="refresh" content="1; url=index.php?inc=user">
+        <meta http-equiv="refresh" content="1; url=index.php?inc=guru">
     <?php
 
     } else {
@@ -41,10 +41,10 @@ if (empty($NAMA) || empty($ID) || empty($TELEPON)   || empty($STATUS)  || empty(
         <div class="alert alert-danger  text-bg-danger border-0 fade show" role="alert">
             <strong>Error - </strong> Data Gagal Diubah!!!
         </div>
-        <meta http-equiv="refresh" content="1; url=index.php?inc=user">
+        <meta http-equiv="refresh" content="1; url=index.php?inc=guru">
 <?php
     }
-    echo '<meta http-equiv="refresh" content="1; url=index.php?inc=user">';
+    echo '<meta http-equiv="refresh" content="1; url=index.php?inc=guru">';
 }
 
 ?>

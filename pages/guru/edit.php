@@ -4,14 +4,13 @@ $id = $_GET['id'];
 // cari role user
 
 // cari data berdasarkan id dari form edit
-$sql = "SELECT `tbl_auth`.*, `tbl_user`.* FROM `tbl_auth`  LEFT JOIN `tbl_user` ON `tbl_user`.`auth_id` = `tbl_auth`.`auth_id` WHERE tbl_user.id_user='$id'";
+$sql = "SELECT * FROM `tbl_guru`  WHERE nip='$id'";
 
 $edit = mysqli_query($KONEKSI, $sql);
 while ($row = mysqli_fetch_assoc($edit)) {
-    $id_user = $row['id_user'];
-    $nama = $row['nama_user'];
-    $email = $row['email'];
-    $telepon = $row['telepon_user'];
+    $id = $row['nip'];
+    $nama = $row['nama_guru'];
+    $telepon = $row['telepon_guru'];
     $photo = $row['path_photo'];
     $start = $row['date_start'];
     $finish = $row['date_finish'];
@@ -35,10 +34,10 @@ while ($row = mysqli_fetch_assoc($edit)) {
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                             <li class="breadcrumb-item active">Settings</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">User</a></li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">Guru</a></li>
                         </ol>
                     </div>
-                    <h4 class="page-title">User Petugas</h4>
+                    <h4 class="page-title">Guru</h4>
                 </div>
             </div>
         </div>
@@ -54,22 +53,16 @@ while ($row = mysqli_fetch_assoc($edit)) {
             <div class="col-12 row">
                 <div class="card mb-3 col-12">
                     <div class="card-body">
-                        <h4 class="header-title">Edit User Petugas</h4>
+                        <h4 class="header-title">Edit Guru</h4>
                         <form method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="kode" value="<?= $id_user ?>">
-                            <input type="hidden" name="role" value="1">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="name" name="name" value="<?= $nama ?>" placeholder="Nama Petugas">
-                            </div>
                             <div class="row g-2">
-                                <div class="mb-3 col-md-6">
-                                    <label for="inputEmail4" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4" readonly name="email" value="<?= $email ?>" placeholder="Email Petugas">
+                                <div class="mb-3  col-md-6">
+                                    <label for="kode" class="form-label">NIP</label>
+                                    <input type="text" class="form-control" id="kode" name="kode" value="<?= $id ?>" readonly>
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="kontak" class="form-label">Telepon</label>
-                                    <input type="number" class="form-control" id="kontak" name="telepon" value="<?= $telepon ?>" placeholder="Telepon Petugas">
+                                <div class="mb-3  col-md-6">
+                                    <label for="name" class="form-label">Nama</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="<?= $nama ?>" placeholder="Nama Guru">
                                 </div>
                             </div>
 
@@ -85,10 +78,15 @@ while ($row = mysqli_fetch_assoc($edit)) {
                                 </div>
                             </div>
                             <div class="row g-2">
+                                <div class="mb-3 col">
+                                    <label for="kontak" class="form-label">Telepon</label>
+                                    <input type="number" class="form-control" id="kontak" value="<?= $telepon ?>" name="telepon" placeholder="Telepon Petugas">
+                                </div></div>
+                            <div class="row g-2">
                                 <div class="mb-3 col-md-6">
                                     <label for="Photo" class="form-label ">Upload Foto</label>
                                     <input type="file" id="Photo" name="Photo" class="form-control mb-3">
-                                    <img src="../assets/images/users/<?= empty($photo) ? 'user.jpg' : $photo; ?>" class="avatar-xl rounded-circle" width="150px" alt="">
+                                    <img src="../assets/images/warga_sekolah/<?= empty($photo) ? 'user.jpg' : $photo; ?>" class="avatar-xl rounded-circle" width="150px" alt="">
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <p class="  form-label">Status Petugas</p>
@@ -107,7 +105,7 @@ while ($row = mysqli_fetch_assoc($edit)) {
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary" name="edit">Update</button>
+                            <button type="submit" class="btn btn-primary" name="edit">Tambah</button>
                         </form>
                     </div>
                 </div>

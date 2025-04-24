@@ -986,20 +986,60 @@ function tambah_guru($data,$file,$target)
     }
 }
 
-function edit_guru($data)
+function edit_guru($data,$file,$target)
 {
     global $KONEKSI;
     global $tgl;
 
-    $NAMA = htmlspecialchars($data["jurusan"]);
-    $SIMBOL = htmlspecialchars($data["jurusan2"]);
-    $ID = htmlspecialchars($data["id"]);
+    $ID = htmlspecialchars($_POST["kode"]);
+    $NAMA = htmlspecialchars($_POST["name"]);
+    $TELEPON = htmlspecialchars($_POST["telepon"]);
+    $START = htmlspecialchars($_POST["start"]);
+    $FINISH = htmlspecialchars($_POST["finish"]);
+    $STATUS = htmlspecialchars($_POST["status"]);
+    $PHOTO_LAMA = htmlspecialchars($_POST["photo_db"]);
+
+    
+    //  echo $NAMA . " | ". $TELEPON . " | " . $DOMISILI . " | " . $KTP . " | " . $NOKTP . " | " . $JABATAN. " | " . $START . " | " . $FINISH . " | " . $STATUS . " | " . $target . " | ". $foto_lama . " | " . $ID . " | " . $JENKEL . " | " . $CABANG . " | " . $tgl;
+    //  die;
+    $cek_file_lama = $target . $PHOTO_LAMA; // lokasi file lama
+
+    // cek apakah ada file yang diupload?
+    if (isset($file['Photo']) && $file['Photo']['error'] !== UPLOAD_ERR_NO_FILE) {
+        $foto_baru = upload_file_new($data, $file, $target);
+
+        // pastikan file baru terupload (debugging)
+        echo "File Baru berhasil di upload : " . $foto_baru;
+
+        // pastikan file lama terhapus (unlink)
+        //cek apakah file lama ada?
+        if ($foto_baru &&  file_exists($cek_file_lama)) {
+            if (unlink($cek_file_lama)) {
+                echo "berhasil menghapus file lama";
+            } else {
+                echo "gagal hapus file lama";
+            }
+        } else {
+            echo "gagal menghapus file lama";
+        }
+    } else {
+        $foto_baru = $PHOTO_LAMA;
+        echo '<script language="javascript">
+                window.alert("menggunakan foto lama : ' . $PHOTO_LAMA . '");
+            </script>';
+    }
+
 
 
     // update data ke tbl_branch
-    $sql = "UPDATE tbl_jurusan SET 
-    simbol_jur='$SIMBOL',
-    nama_jurusan='$NAMA' WHERE id_jurusan='$ID' ";
+    $sql = "UPDATE tbl_guru SET 
+    nama_guru='$NAMA',
+    telepon_guru='$NAMA',
+    path_photo='$foto_baru',
+    status='$STATUS',
+    date_start='$START',
+    date_finish='$FINISH',
+    update_at='$tgl' WHERE nip='$ID' ";
 
 
 
@@ -1018,17 +1058,28 @@ function edit_guru($data)
     return mysqli_affected_rows($KONEKSI);
 }
 
-function hapus_guru($data)
+function hapus_guru($data,$target)
 {
     global $KONEKSI;
     $id = $data['id'];
 
 
-    $query = "DELETE FROM tbl_jurusan WHERE id_jurusan='$id'";
+    // hapus file gambar milik USER
+    $sql = "SELECT * FROM tbl_guru WHERE nip='$id'";
+    $hasil = mysqli_query($KONEKSI, $sql) or die('data tidak ditemukan -->' . mysqli_error($KONEKSI));
+    $row = mysqli_fetch_assoc($hasil);
+
+    $photo = $row['path_photo'];
+
+    if (!$photo == "") {
+        unlink($target . $photo);
+    }
+    $query = "DELETE FROM tbl_guru WHERE nip='$id'";
 
     if (mysqli_query($KONEKSI, $query)) {
         echo '<script language="javascript">
     window.alert("Data Berhasil Di Hapus");
     </script>';
     }
+
 }
