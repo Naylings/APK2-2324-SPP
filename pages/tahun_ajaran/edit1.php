@@ -77,7 +77,7 @@
                             </select>
                         </div>
                         <div class="mb-3 col-md-2">
-                        <label for="customSwitch1" class="form-label">Aktif</label>
+                            <label for="customSwitch1" class="form-label">Aktif</label>
                             <div class="form-check form-switch">
                                 <input type="hidden" name="status" value="Inactive">
                                 <input type="checkbox" class="form-check-input" id="customSwitch1" name="status" value="Active"
@@ -86,6 +86,16 @@
 
                         </div>
 
+                    </div>
+                    <div class="row g-2">
+                        <div class="mb-3 col-md-6">
+                            <label for="start" class="form-label">Tanggal mulai</label>
+                            <input type="date" class="form-control" name="start" value="<?= $user['tgl_start'] ?>" id="start">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="finish" class="form-label">Tanggal Selesai</label>
+                            <input type="date" class="form-control" name="finish" value="<?= $user['tgl_finish'] ?>" id="finish">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

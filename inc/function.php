@@ -736,6 +736,8 @@ function tambah_tahun_ajaran($data)
 
     $TAHUN1 = htmlspecialchars($data["tahun"]);
     $TAHUN2 = htmlspecialchars($data["tahun2"]);
+    $START = htmlspecialchars($data["start"]);
+    $FINISH = htmlspecialchars($data["finish"]);
 
     // echo "<pre>";
     // print_r($data); // melihat data yang akan diterima
@@ -765,6 +767,8 @@ function tambah_tahun_ajaran($data)
     $sql = "INSERT INTO tbl_tahun_ajaran SET
     semester_ganjil='$ganjil',
     semester_genap='$genap',
+    tgl_start='$START',
+    tgl_finish='$FINISH',
     status='Active',
     simbol_tahun_ajaran='$SIMBOL'";
 
@@ -787,6 +791,8 @@ function edit_tahun_ajaran($data)
     $TAHUN2 = htmlspecialchars($data["tahun2"]);
     $ID = htmlspecialchars($data["id"]);
     $STATUS = htmlspecialchars($data["status"]);
+    $START = htmlspecialchars($data["start"]);
+    $FINISH = htmlspecialchars($data["finish"]);
 
 
     $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN1'");
@@ -800,11 +806,11 @@ function edit_tahun_ajaran($data)
         $simbol2 = $key['simbol'];
     }
     $SIMBOL = $simbol1 . $simbol2;
-if ($STATUS == "Active") {
-    $sql1 = "UPDATE tbl_tahun_ajaran SET 
+    if ($STATUS == "Active") {
+        $sql1 = "UPDATE tbl_tahun_ajaran SET 
     status='Inactive'  ";
-    mysqli_query($KONEKSI, $sql1);
-}
+        mysqli_query($KONEKSI, $sql1);
+    }
 
 
     // update data ke tbl_branch
@@ -812,6 +818,8 @@ if ($STATUS == "Active") {
     simbol_tahun_ajaran='$SIMBOL',
     semester_ganjil='$ganjil',
     semester_genap='$genap',
+    tgl_start='$START',
+    tgl_finish='$FINISH',
     status='$STATUS' WHERE id_tahun_ajaran='$ID' ";
 
 
@@ -912,6 +920,105 @@ function edit_jurusan($data)
 }
 
 function hapus_jurusan($data)
+{
+    global $KONEKSI;
+    $id = $data['id'];
+
+
+    $query = "DELETE FROM tbl_jurusan WHERE id_jurusan='$id'";
+
+    if (mysqli_query($KONEKSI, $query)) {
+        echo '<script language="javascript">
+    window.alert("Data Berhasil Di Hapus");
+    </script>';
+    }
+}
+
+
+function tambah_guru($data,$file,$target)
+{
+
+    global $KONEKSI;
+    global $tgl;
+
+
+    $ID = htmlspecialchars($data["kode"]);
+    $NAMA = htmlspecialchars($data["name"]);
+    $TELEPON = htmlspecialchars($data["telepon"]);
+    $START = htmlspecialchars($data["start"]);
+    $FINISH = htmlspecialchars($data["finish"]);
+
+    // echo "<pre>";
+    // print_r($data); // melihat data yang akan diterima
+    // print_r($file); // melihat file yang akan diterima
+    // echo "</pre>";
+
+    // input data ke tabel
+
+    // jika upload berhasil maka insert data ke tabel
+    $gambar_photo = upload_file_new($data, $file, $target);
+
+    // var_dump($gambar_photo);
+    // die;
+
+    //jika gambar tidak di upload operasi di hentikan
+    if (!$gambar_photo) {
+        return false;
+    }
+
+    $sql = "INSERT INTO tbl_guru SET
+    nip='$ID',
+    nama_guru='$NAMA',
+    telepon_guru='$TELEPON',
+    path_photo='$gambar_photo',
+    status='Inactive',
+    date_start='$START',
+    date_finish='$FINISH',
+    create_at='$tgl' ;";
+
+    // cek apakah query berhasil
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        return true;
+    } else {
+        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
+        return false;
+    }
+}
+
+function edit_guru($data)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    $NAMA = htmlspecialchars($data["jurusan"]);
+    $SIMBOL = htmlspecialchars($data["jurusan2"]);
+    $ID = htmlspecialchars($data["id"]);
+
+
+    // update data ke tbl_branch
+    $sql = "UPDATE tbl_jurusan SET 
+    simbol_jur='$SIMBOL',
+    nama_jurusan='$NAMA' WHERE id_jurusan='$ID' ";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
+function hapus_guru($data)
 {
     global $KONEKSI;
     $id = $data['id'];

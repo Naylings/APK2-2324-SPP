@@ -10,42 +10,31 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                            <li class="breadcrumb-item active">Kategori</li>
-                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">Tahun Ajaran</a></li>
+                            <li class="breadcrumb-item active">Warga Sekolah</li>
+                            <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">Guru</a></li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Tahun Ajaran</h4>
+                    <h4 class="page-title">Guru</h4>
                 </div>
             </div>
         </div>
         <!-- end page title -->
-        <?php
-        $tahun = tampil("SELECT * FROM `tbl_tahun` ORDER BY tahun ASC");
-        if (isset($_POST['tambah'])) {
-            include "proses_tambah.php";
-        }
-        if (isset($_POST['edit'])) {
-            include "proses_edit.php";
-        }
-        if (isset($_POST['hapus'])) {
-            include "proses hapus.php";
-        }
-        ?>
+
+
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-auto">
-                                <h4 class="header-title"> Data Tahun Ajaran</h4>
+                                <h4 class="header-title"> Data Guru</h4>
                             </div>
                             <div class="col-auto ms-auto">
                                 <div class="btn-group mb-2 ">
-                                    <!-- <a role="button" href="?inc=tahun&aksi=add" class="btn btn-success">Tambah Tahun</a> -->
+                                    <a role="button" href="?inc=guru&aksi=add" class="btn btn-success">Tambah Guru</a>
                                     <!-- <button type="button" class="btn btn-warning">Warning</button>
                                     <button type="button" class="btn btn-danger">Danger</button> -->
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#tambah-tahun_ajaran">Tambah Tahun Ajaran</button>
-
                                 </div>
                             </div>
                         </div>
@@ -55,10 +44,12 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Tahun Ajaran</th>
-                                            <th>Tanggal Mulai - Selesai</th>
-                                            <th>Simbol</th>
-                                            <th>Status</th>
+                                            <th>Photo</th>
+                                            <th>NIP</th>
+                                            <th>Nama Guru</th>
+                                            <th>Telepon</th>
+                                            <th>Status Guru</th>
+                                            <th>Work Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -68,35 +59,34 @@
                                         <?php
 
 
-                                        $sql_tahun = "SELECT * FROM `tbl_tahun_ajaran` ORDER BY simbol_tahun_ajaran ASC"; // sql untuk tampil
+                                        $sql_guru = "SELECT * FROM `tbl_guru`  ORDER BY nip ASC "; // sql untuk tampil
 
-                                        $tampil = tampil($sql_tahun); // panggil tampil sesuai sql
+                                        $tampil = tampil($sql_guru); // panggil tampil sesuai sql
                                         $no = 1;
                                         foreach ($tampil as $user) :
                                         ?>
                                             <tr>
-                                                <td><?= $no; ?></td>
-                                                <td><?= $user['semester_ganjil']; ?> - <?= $user['semester_genap']; ?></td>
-                                                <td><?= $user['tgl_start']; ?> - <?= $user['tgl_finish']; ?></td>
-                                                <td><?= $user['simbol_tahun_ajaran']; ?></td>
+                                                <td><?= $no++; ?></td>
+                                                <td class="table-user">
+                                                    <img src="../assets/images/warga_sekolah/<?= empty($user['path_photo']) ? 'user.jpg' : $user['path_photo']; ?>" alt="table-user" class="me-2 rounded-circle">
+                                                </td>
+                                                <td><?= $user['nip']; ?></td>
+                                                <td><?= $user['nama_guru']; ?></td>
+                                                <td><?= $user['telepon_guru']; ?></td>
                                                 <td><?= $user['status']; ?></td>
+                                                <td><?= $user['date_start'] . " - " . $user['date_finish']; ?></td>
                                                 <td>
                                                     <div class="dropdown text-center">
                                                         <a href="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-tahun_ajaran-<?= $user['simbol_tahun_ajaran']; ?>">Edit</button>
-                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#hapus-tahun_ajaran-<?= $user['simbol_tahun_ajaran']; ?>">Delete</button>
+                                                            <a class="dropdown-item" href="?inc=guru&aksi=edit&id=<?= $user['nip'] ?>">Edit</a>
+                                                            <a class="dropdown-item" href="?inc=guru&aksi=delete&id=<?= $user['nip'] ?>">Delete</a>
                                                             <a class="dropdown-item" href="#">View</a>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
-                                        <?php
-                                            include "edit1.php";
-                                            include "hapus1.php";
-                                            $no++;
-                                        endforeach;
-                                        ?>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div> <!-- end preview-->
@@ -112,7 +102,3 @@
     </div> <!-- container -->
 
 </div> <!-- content -->
-<?php
-include "tambah1.php";
-
-?>

@@ -6,6 +6,8 @@ $TAHUN1 = htmlspecialchars($_POST["tahun"]);
 $TAHUN2 = htmlspecialchars($_POST["tahun2"]);
 $ID = htmlspecialchars($_POST["id"]);
 $STATUS = htmlspecialchars($_POST["status"]);
+$START = htmlspecialchars($_POST["start"]);
+$FINISH = htmlspecialchars($_POST["finish"]);
 
 $sama = $TAHUN1 == $TAHUN2;
 
@@ -45,7 +47,7 @@ foreach ($tahun2 as $row) {
 
 // echo $ID . " | " . $NAMA . " | " . $EMAIL . " | " . $ROLE. " | " . $TELEPON. " | " . $PASSWORD1. " | " . $PASSWORD2;
 
-if (empty($TAHUN1) || empty($TAHUN2) || empty($STATUS)) {
+if (empty($TAHUN1) || empty($TAHUN2) || empty($STATUS) || empty($START) || empty($FINISH)) {
 ?>
     <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -64,6 +66,13 @@ if (empty($TAHUN1) || empty($TAHUN2) || empty($STATUS)) {
     <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
         <strong>Error - </strong> Tahun Tidak Boleh Sama!!!
+    </div> 
+    <?php
+} elseif ($TAHUN1 > $TAHUN2) {
+    ?>
+    <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        <strong>Error - </strong> Tahun 2 Tidak Boleh Lebih Kecil Dari Tahun 1!!!
     </div> 
     <?php
 } else {

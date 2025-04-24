@@ -7,8 +7,17 @@ require_once '../inc/function.php';
 
 $TAHUN1 = htmlspecialchars($_POST["tahun"]);
 $TAHUN2 = htmlspecialchars($_POST["tahun2"]);
+$START = htmlspecialchars($_POST["start"]);
+$FINISH = htmlspecialchars($_POST["finish"]);
 
-$sama = $TAHUN1 == $TAHUN2;
+$tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN1'");
+foreach ($tahun as $key) {
+    $TAHUN1 = $key['tahun'];
+}
+$tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN2'");
+foreach ($tahun as $key) {
+    $TAHUN2 = $key['tahun'];
+}
 
 // var_dump($_POST);
 // var_dump($_FILES);
@@ -25,7 +34,7 @@ $sama = $TAHUN1 == $TAHUN2;
 //     }
 // }
 
-if (empty($TAHUN1) || empty($TAHUN2) ) { // jika dari pengecekan sebelumnya ada field yang kosong maka akan menampilkan pesan error
+if (empty($TAHUN1) || empty($TAHUN2) || empty($START)|| empty($FINISH)  ) { // jika dari pengecekan sebelumnya ada field yang kosong maka akan menampilkan pesan error
 ?>
     <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -39,11 +48,18 @@ if (empty($TAHUN1) || empty($TAHUN2) ) { // jika dari pengecekan sebelumnya ada 
             <strong>Error - </strong> Data Tahun Sudah Ada!!!
         </div>  -->
         <?php
-    } elseif ($sama == true) {
+    } elseif ($TAHUN1 == $TAHUN2) {
         ?>
         <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Error - </strong> Tahun Tidak Boleh Sama!!!
+        </div> 
+        <?php
+    }elseif ($TAHUN1 > $TAHUN2) {
+        ?>
+        <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Error - </strong> Tahun 2 Tidak Boleh Lebih Kecil Dari Tahun 1!!!
         </div> 
         <?php
     } else {
