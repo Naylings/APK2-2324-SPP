@@ -36,6 +36,10 @@ switch ($pages) {
                 case 'jurusan':
                     include "../pages/jurusan/jurusan.php";
                     break;
+    
+                case 'guru':
+                    include "../pages/guru/guru.php";
+                    break;
 
     default:
         include "../pages/master/dashboard.php";
