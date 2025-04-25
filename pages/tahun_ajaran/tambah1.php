@@ -66,16 +66,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row g-2">
-                        <div class="mb-3 col-md-6">
-                            <label for="start" class="form-label">Tanggal mulai</label>
-                            <input type="date" class="form-control" name="start" id="start">
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="finish" class="form-label">Tanggal Selesai</label>
-                            <input type="date" class="form-control" name="finish" id="finish">
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
