@@ -736,6 +736,8 @@ function tambah_tahun_ajaran($data)
 
     $TAHUN1 = htmlspecialchars($data["tahun"]);
     $TAHUN2 = htmlspecialchars($data["tahun2"]);
+    $START = htmlspecialchars($data["start"]);
+    $FINISH = htmlspecialchars($data["finish"]);
 
     // echo "<pre>";
     // print_r($data); // melihat data yang akan diterima
@@ -765,6 +767,8 @@ function tambah_tahun_ajaran($data)
     $sql = "INSERT INTO tbl_tahun_ajaran SET
     semester_ganjil='$ganjil',
     semester_genap='$genap',
+    tgl_start='$START',
+    tgl_finish='$FINISH',
     status='Active',
     simbol_tahun_ajaran='$SIMBOL'";
 
@@ -787,6 +791,8 @@ function edit_tahun_ajaran($data)
     $TAHUN2 = htmlspecialchars($data["tahun2"]);
     $ID = htmlspecialchars($data["id"]);
     $STATUS = htmlspecialchars($data["status"]);
+    $START = htmlspecialchars($data["start"]);
+    $FINISH = htmlspecialchars($data["finish"]);
 
 
     $tahun = tampil("SELECT * FROM `tbl_tahun` WHERE id_tahun =  '$TAHUN1'");
@@ -800,11 +806,11 @@ function edit_tahun_ajaran($data)
         $simbol2 = $key['simbol'];
     }
     $SIMBOL = $simbol1 . $simbol2;
-if ($STATUS == "Active") {
-    $sql1 = "UPDATE tbl_tahun_ajaran SET 
+    if ($STATUS == "Active") {
+        $sql1 = "UPDATE tbl_tahun_ajaran SET 
     status='Inactive'  ";
-    mysqli_query($KONEKSI, $sql1);
-}
+        mysqli_query($KONEKSI, $sql1);
+    }
 
 
     // update data ke tbl_branch
@@ -812,6 +818,8 @@ if ($STATUS == "Active") {
     simbol_tahun_ajaran='$SIMBOL',
     semester_ganjil='$ganjil',
     semester_genap='$genap',
+    tgl_start='$START',
+    tgl_finish='$FINISH',
     status='$STATUS' WHERE id_tahun_ajaran='$ID' ";
 
 
@@ -924,4 +932,154 @@ function hapus_jurusan($data)
     window.alert("Data Berhasil Di Hapus");
     </script>';
     }
+}
+
+
+function tambah_guru($data,$file,$target)
+{
+
+    global $KONEKSI;
+    global $tgl;
+
+
+    $ID = htmlspecialchars($data["kode"]);
+    $NAMA = htmlspecialchars($data["name"]);
+    $TELEPON = htmlspecialchars($data["telepon"]);
+    $START = htmlspecialchars($data["start"]);
+    $FINISH = htmlspecialchars($data["finish"]);
+
+    // echo "<pre>";
+    // print_r($data); // melihat data yang akan diterima
+    // print_r($file); // melihat file yang akan diterima
+    // echo "</pre>";
+
+    // input data ke tabel
+
+    // jika upload berhasil maka insert data ke tabel
+    $gambar_photo = upload_file_new($data, $file, $target);
+
+    // var_dump($gambar_photo);
+    // die;
+
+    //jika gambar tidak di upload operasi di hentikan
+    if (!$gambar_photo) {
+        return false;
+    }
+
+    $sql = "INSERT INTO tbl_guru SET
+    nip='$ID',
+    nama_guru='$NAMA',
+    telepon_guru='$TELEPON',
+    path_photo='$gambar_photo',
+    status='Inactive',
+    date_start='$START',
+    date_finish='$FINISH',
+    create_at='$tgl' ;";
+
+    // cek apakah query berhasil
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        return true;
+    } else {
+        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
+        return false;
+    }
+}
+
+function edit_guru($data,$file,$target)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    $ID = htmlspecialchars($_POST["kode"]);
+    $NAMA = htmlspecialchars($_POST["name"]);
+    $TELEPON = htmlspecialchars($_POST["telepon"]);
+    $START = htmlspecialchars($_POST["start"]);
+    $FINISH = htmlspecialchars($_POST["finish"]);
+    $STATUS = htmlspecialchars($_POST["status"]);
+    $PHOTO_LAMA = htmlspecialchars($_POST["photo_db"]);
+
+    
+    //  echo $NAMA . " | ". $TELEPON . " | " . $DOMISILI . " | " . $KTP . " | " . $NOKTP . " | " . $JABATAN. " | " . $START . " | " . $FINISH . " | " . $STATUS . " | " . $target . " | ". $foto_lama . " | " . $ID . " | " . $JENKEL . " | " . $CABANG . " | " . $tgl;
+    //  die;
+    $cek_file_lama = $target . $PHOTO_LAMA; // lokasi file lama
+
+    // cek apakah ada file yang diupload?
+    if (isset($file['Photo']) && $file['Photo']['error'] !== UPLOAD_ERR_NO_FILE) {
+        $foto_baru = upload_file_new($data, $file, $target);
+
+        // pastikan file baru terupload (debugging)
+        echo "File Baru berhasil di upload : " . $foto_baru;
+
+        // pastikan file lama terhapus (unlink)
+        //cek apakah file lama ada?
+        if ($foto_baru &&  file_exists($cek_file_lama)) {
+            if (unlink($cek_file_lama)) {
+                echo "berhasil menghapus file lama";
+            } else {
+                echo "gagal hapus file lama";
+            }
+        } else {
+            echo "gagal menghapus file lama";
+        }
+    } else {
+        $foto_baru = $PHOTO_LAMA;
+        echo '<script language="javascript">
+                window.alert("menggunakan foto lama : ' . $PHOTO_LAMA . '");
+            </script>';
+    }
+
+
+
+    // update data ke tbl_branch
+    $sql = "UPDATE tbl_guru SET 
+    nama_guru='$NAMA',
+    telepon_guru='$NAMA',
+    path_photo='$foto_baru',
+    status='$STATUS',
+    date_start='$START',
+    date_finish='$FINISH',
+    update_at='$tgl' WHERE nip='$ID' ";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
+function hapus_guru($data,$target)
+{
+    global $KONEKSI;
+    $id = $data['id'];
+
+
+    // hapus file gambar milik USER
+    $sql = "SELECT * FROM tbl_guru WHERE nip='$id'";
+    $hasil = mysqli_query($KONEKSI, $sql) or die('data tidak ditemukan -->' . mysqli_error($KONEKSI));
+    $row = mysqli_fetch_assoc($hasil);
+
+    $photo = $row['path_photo'];
+
+    if (!$photo == "") {
+        unlink($target . $photo);
+    }
+    $query = "DELETE FROM tbl_guru WHERE nip='$id'";
+
+    if (mysqli_query($KONEKSI, $query)) {
+        echo '<script language="javascript">
+    window.alert("Data Berhasil Di Hapus");
+    </script>';
+    }
+
 }
