@@ -259,30 +259,6 @@ foreach ($sql_login as $user_login) {
                     </li>
 
 
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#user" aria-expanded="false" aria-controls="user" class="side-nav-link">
-                            <i class=" uil-users-alt"></i>
-                            <span> Warga Sekolah </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="user">
-                            <ul class="side-nav-second-level">
-
-                                <li class="side-nav-item">
-                                    <a href="?inc=guru" class="side-nav-link">
-                                        <span> Guru</span>
-                                    </a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="?inc=siswa" class="side-nav-link">
-                                        <span> Siswa</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </li>
-
                     <li class="side-nav-title">Kategori</li>
 
 
