@@ -854,87 +854,6 @@ function hapus_tahun_ajaran($data)
     }
 }
 
-function tambah_jurusan($data)
-{
-
-    global $KONEKSI;
-    global $tgl;
-
-
-    $NAMA = htmlspecialchars($data["jurusan"]);
-    $SIMBOL = htmlspecialchars($data["jurusan2"]);
-
-    // echo "<pre>";
-    // print_r($data); // melihat data yang akan diterima
-    // print_r($file); // melihat file yang akan diterima
-    // echo "</pre>";
-
-    // input data ke tabel
-
-    // jika upload berhasil maka insert data ke tabel
-
-    $sql = "INSERT INTO tbl_jurusan SET
-    nama_jurusan='$NAMA',
-    simbol_jur='$SIMBOL' ";
-
-    // cek apakah query berhasil
-    if (mysqli_query($KONEKSI, $sql)) {
-        echo "<script>alert('Data berhasil ditambahkan');</script>";
-        return true;
-    } else {
-        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
-        return false;
-    }
-}
-
-function edit_jurusan($data)
-{
-    global $KONEKSI;
-    global $tgl;
-
-    $NAMA = htmlspecialchars($data["jurusan"]);
-    $SIMBOL = htmlspecialchars($data["jurusan2"]);
-    $ID = htmlspecialchars($data["id"]);
-
-
-    // update data ke tbl_branch
-    $sql = "UPDATE tbl_jurusan SET 
-    simbol_jur='$SIMBOL',
-    nama_jurusan='$NAMA' WHERE id_jurusan='$ID' ";
-
-
-
-    // cek query update
-    if (mysqli_query($KONEKSI, $sql)) {
-        echo '<script language="javascript">
-                window.alert("Data Berhasil Di Update");
-            </script>';
-    } else {
-        echo '<script language="javascript">
-                window.alert("Data Gagal Di Update");
-            </script>';
-    }
-
-
-    return mysqli_affected_rows($KONEKSI);
-}
-
-function hapus_jurusan($data)
-{
-    global $KONEKSI;
-    $id = $data['id'];
-
-
-    $query = "DELETE FROM tbl_jurusan WHERE id_jurusan='$id'";
-
-    if (mysqli_query($KONEKSI, $query)) {
-        echo '<script language="javascript">
-    window.alert("Data Berhasil Di Hapus");
-    </script>';
-    }
-}
-
-
 function tambah_guru($data,$file,$target)
 {
 
@@ -1082,4 +1001,94 @@ function hapus_guru($data,$target)
     </script>';
     }
 
+}
+
+function tambah_kelas($data)
+{
+
+    global $KONEKSI;
+    global $tgl;
+
+
+    $TINGKAT = htmlspecialchars($data["tingkat"]);
+    $TAHUN = htmlspecialchars($data["tahun"]);
+    $GURU = !empty($data["guru"]) ? "'".htmlspecialchars($data["guru"])."'" : "null";
+    $JURUSAN = htmlspecialchars($data["jurusan"]);
+    
+
+    // echo "<pre>";
+    // print_r($data); // melihat data yang akan diterima
+    // print_r($file); // melihat file yang akan diterima
+    // echo "</pre>";
+
+    // input data ke tabel
+
+    // jika upload berhasil maka insert data ke tabel
+
+    $sql = "INSERT INTO tbl_kelas SET
+    id_tahun_ajaran='$TAHUN',
+    tingkat='$TINGKAT',
+    jurusan='$JURUSAN',
+    wali_kelas=$GURU ";
+
+    // cek apakah query berhasil
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        return true;
+    } else {
+        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
+        return false;
+    }
+}
+
+function edit_kelas($data)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    
+    $TINGKAT = htmlspecialchars($data["tingkat"]);
+    $TAHUN = htmlspecialchars($data["tahun"]);
+    $GURU = !empty($data["guru"]) ? "'".htmlspecialchars($data["guru"])."'" : "null";
+    $JURUSAN = htmlspecialchars($data["jurusan"]);
+    $ID = htmlspecialchars($data["kode"]);
+
+
+    // update data ke tbl_branch
+    $sql = "UPDATE tbl_kelas SET 
+    id_tahun_ajaran='$TAHUN',
+    tingkat='$TINGKAT',
+    jurusan='$JURUSAN',
+    wali_kelas=$GURU WHERE id_kelas='$ID' ";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
+function hapus_kelas($data)
+{
+    global $KONEKSI;
+    $id = $data['id'];
+
+
+    $query = "DELETE FROM tbl_kelas WHERE id_kelas='$id'";
+
+    if (mysqli_query($KONEKSI, $query)) {
+        echo '<script language="javascript">
+    window.alert("Data Berhasil Di Hapus");
+    </script>';
+    }
 }
