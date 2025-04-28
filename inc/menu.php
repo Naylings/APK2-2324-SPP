@@ -40,6 +40,10 @@ switch ($pages) {
                 case 'guru':
                     include "../pages/guru/guru.php";
                     break;
+    
+                case 'kelas':
+                    include "../pages/kelas/kelas.php";
+                    break;
 
     default:
         include "../pages/master/dashboard.php";

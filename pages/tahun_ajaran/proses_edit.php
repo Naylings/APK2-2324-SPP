@@ -42,7 +42,7 @@ foreach ($tahun2 as $row) {
     }
 }
 $used = 0;
-$tgl = tampil("SELECT * FROM `tbl_tahun_ajaran` ");
+$tgl = tampil("SELECT * FROM `tbl_tahun_ajaran` WHERE id_tahun_ajaran !='$ID'");
 foreach ($tgl as $row) {
     if (strtolower($row['tgl_start']) == strtolower($START) || strtolower($row['tgl_finish']) == strtolower($START) || strtolower($row['tgl_start']) == strtolower($FINISH) || strtolower($row['tgl_finish']) == strtolower($FINISH)) {
         $used = 1;

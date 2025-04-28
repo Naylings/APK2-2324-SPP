@@ -260,6 +260,14 @@ foreach ($sql_login as $user_login) {
 
 
                     <li class="side-nav-item">
+                        <a href="?inc=kelas" class="side-nav-link">
+                            <i class="uil-backpack"></i>
+                            <span> Kelas </span>
+                        </a>
+                    </li>
+
+
+                    <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#user" aria-expanded="false" aria-controls="user" class="side-nav-link">
                             <i class=" uil-users-alt"></i>
                             <span> Warga Sekolah </span>
