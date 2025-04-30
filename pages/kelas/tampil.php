@@ -65,7 +65,6 @@
                                             <th>No</th>
                                             <th>Nama Kelas</th>
                                             <th>Tahun Ajaran</th>
-                                            <th>Wali kelas</th>
                                             <th>Jumlah Siswa</th>
                                             <th>Action</th>
                                         </tr>
@@ -83,7 +82,7 @@
                                             $tahun_ajar = "tbl_tahun_ajaran.status = 'Active'";
                                         }
 
-                                        $sql_kelas = "SELECT `tbl_kelas`.*, `tbl_jurusan`.*, `tbl_guru`.*, `tbl_tahun_ajaran`.* FROM `tbl_kelas` 	LEFT JOIN `tbl_jurusan` ON `tbl_kelas`.`jurusan` = `tbl_jurusan`.`id_jurusan` 	LEFT JOIN `tbl_guru` ON `tbl_kelas`.`wali_kelas` = `tbl_guru`.`nip` 	LEFT JOIN `tbl_tahun_ajaran` ON `tbl_kelas`.`id_tahun_ajaran` = `tbl_tahun_ajaran`.`id_tahun_ajaran` WHERE $tahun_ajar ORDER BY tbl_kelas.tingkat ASC "; // sql untuk tampil
+                                        $sql_kelas = "SELECT `tbl_kelas`.*, `tbl_jurusan`.*, `tbl_tahun_ajaran`.* FROM `tbl_kelas` 	LEFT JOIN `tbl_jurusan` ON `tbl_kelas`.`jurusan` = `tbl_jurusan`.`id_jurusan` 	LEFT JOIN `tbl_tahun_ajaran` ON `tbl_kelas`.`id_tahun_ajaran` = `tbl_tahun_ajaran`.`id_tahun_ajaran` WHERE $tahun_ajar ORDER BY tbl_jurusan.simbol_jur ASC, tbl_kelas.tingkat ASC"; // sql untuk tampil
 
                                         $tampil = tampil($sql_kelas); // panggil tampil sesuai sql
                                         $no = 1;
@@ -91,15 +90,13 @@
                                         ?>
                                             <tr>
                                                 <td><?= $no++; ?></td>
-                                                <td><?= $user['tingkat'] . " - " . $user['simbol_jur']; ?></td>
+                                                <td><?= $user['tingkat'] . " - " . $user['nama_jurusan']." ( ". $user['simbol_jur']." )"; ?></td>
                                                 <td><?= $user['semester_ganjil'] . " - " . $user['semester_genap']; ?></td>
-                                                <td><?= ($user['nama_guru'] != "") ? $user['nama_guru'] : ' <span class="badge bg-warning">Kosong</span> ';?></td>
                                                 <td>
                                                     <?php
-                                                    // $id_kelas = $user['id_kelas'];
-                                                    // $murid = tampil("SELECT * FROM tbl_siswa WHERE id_kelas='$id_kelas'"); 
-                                                    // echo count($murid)." Siswa";
-                                                    echo "banyak";
+                                                    $id_kelas = $user['id_kelas'];
+                                                    $murid = tampil("SELECT * FROM tbl_siswa WHERE id_kelas='$id_kelas'"); 
+                                                    echo count($murid)." Siswa";
                                                     ?>
                                                 </td>
                                                 <td>
@@ -108,7 +105,7 @@
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                             <a class="dropdown-item" href="?inc=kelas&aksi=edit&id=<?= $user['id_kelas'] ?>">Edit</a>
                                                             <a class="dropdown-item" href="?inc=kelas&aksi=delete&id=<?= $user['id_kelas'] ?>">Delete</a>
-                                                            <a class="dropdown-item" href="#">View</a>
+                                                            <a class="dropdown-item" href="?inc=kelas&aksi=view&id=<?= $user['id_kelas'] ?>">View</a>
                                                         </div>
                                                     </div>
                                                 </td>

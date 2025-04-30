@@ -5,7 +5,6 @@ require_once '../inc/function.php';
 $ID = htmlspecialchars($_POST["kode"]);
 $TINGKAT = htmlspecialchars($_POST["tingkat"]);
 $TAHUN = htmlspecialchars($_POST["tahun"]);
-$GURU = htmlspecialchars($_POST["guru"]);
 $JURUSAN = htmlspecialchars($_POST["jurusan"]);
 
 // $GAMBAR = $_FILES['Photo']['tmp_name']; //tangkap data file
@@ -40,9 +39,6 @@ if (empty($TINGKAT) || empty($TAHUN)  || empty($JURUSAN)) {
     </div>
     <?php
 } else {
-    if (empty($GURU)) {
-        echo "<script>alert('Tolong Segera Cari Guru Untuk Wali Kelas!!!');</script>";
-    }
     if (edit_kelas($_POST) > 0 || $same) {
     ?>
         <div class="alert alert-success  text-bg-success border-0 fade show" role="alert">

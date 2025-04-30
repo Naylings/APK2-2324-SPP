@@ -854,7 +854,7 @@ function hapus_tahun_ajaran($data)
     }
 }
 
-function tambah_guru($data,$file,$target)
+function tambah_guru($data, $file, $target)
 {
 
     global $KONEKSI;
@@ -905,7 +905,7 @@ function tambah_guru($data,$file,$target)
     }
 }
 
-function edit_guru($data,$file,$target)
+function edit_guru($data, $file, $target)
 {
     global $KONEKSI;
     global $tgl;
@@ -918,7 +918,12 @@ function edit_guru($data,$file,$target)
     $STATUS = htmlspecialchars($_POST["status"]);
     $PHOTO_LAMA = htmlspecialchars($_POST["photo_db"]);
 
-    
+    if ($STATUS == "Inactive") {
+        mysqli_query($KONEKSI, "UPDATE tbl_kelas SET  wali_kelas=NULL  WHERE wali_kelas = '$ID'");
+    }
+
+
+
     //  echo $NAMA . " | ". $TELEPON . " | " . $DOMISILI . " | " . $KTP . " | " . $NOKTP . " | " . $JABATAN. " | " . $START . " | " . $FINISH . " | " . $STATUS . " | " . $target . " | ". $foto_lama . " | " . $ID . " | " . $JENKEL . " | " . $CABANG . " | " . $tgl;
     //  die;
     $cek_file_lama = $target . $PHOTO_LAMA; // lokasi file lama
@@ -953,7 +958,7 @@ function edit_guru($data,$file,$target)
     // update data ke tbl_branch
     $sql = "UPDATE tbl_guru SET 
     nama_guru='$NAMA',
-    telepon_guru='$NAMA',
+    telepon_guru='$TELEPON',
     path_photo='$foto_baru',
     status='$STATUS',
     date_start='$START',
@@ -977,7 +982,7 @@ function edit_guru($data,$file,$target)
     return mysqli_affected_rows($KONEKSI);
 }
 
-function hapus_guru($data,$target)
+function hapus_guru($data, $target)
 {
     global $KONEKSI;
     $id = $data['id'];
@@ -1000,7 +1005,6 @@ function hapus_guru($data,$target)
     window.alert("Data Berhasil Di Hapus");
     </script>';
     }
-
 }
 
 function tambah_kelas($data)
@@ -1012,9 +1016,8 @@ function tambah_kelas($data)
 
     $TINGKAT = htmlspecialchars($data["tingkat"]);
     $TAHUN = htmlspecialchars($data["tahun"]);
-    $GURU = !empty($data["guru"]) ? "'".htmlspecialchars($data["guru"])."'" : "null";
     $JURUSAN = htmlspecialchars($data["jurusan"]);
-    
+
 
     // echo "<pre>";
     // print_r($data); // melihat data yang akan diterima
@@ -1028,8 +1031,7 @@ function tambah_kelas($data)
     $sql = "INSERT INTO tbl_kelas SET
     id_tahun_ajaran='$TAHUN',
     tingkat='$TINGKAT',
-    jurusan='$JURUSAN',
-    wali_kelas=$GURU ";
+    jurusan='$JURUSAN'";
 
     // cek apakah query berhasil
     if (mysqli_query($KONEKSI, $sql)) {
@@ -1046,10 +1048,9 @@ function edit_kelas($data)
     global $KONEKSI;
     global $tgl;
 
-    
+
     $TINGKAT = htmlspecialchars($data["tingkat"]);
     $TAHUN = htmlspecialchars($data["tahun"]);
-    $GURU = !empty($data["guru"]) ? "'".htmlspecialchars($data["guru"])."'" : "null";
     $JURUSAN = htmlspecialchars($data["jurusan"]);
     $ID = htmlspecialchars($data["kode"]);
 
@@ -1058,8 +1059,7 @@ function edit_kelas($data)
     $sql = "UPDATE tbl_kelas SET 
     id_tahun_ajaran='$TAHUN',
     tingkat='$TINGKAT',
-    jurusan='$JURUSAN',
-    wali_kelas=$GURU WHERE id_kelas='$ID' ";
+    jurusan='$JURUSAN' WHERE id_kelas='$ID' ";
 
 
 
@@ -1093,7 +1093,8 @@ function hapus_kelas($data)
     }
 }
 
-function tambah_jurusan($data){
+function tambah_jurusan($data)
+{
 
     global $KONEKSI;
     global $tgl;
@@ -1165,7 +1166,162 @@ function hapus_jurusan($data)
 
     $query = "DELETE FROM tbl_jurusan WHERE id_jurusan='$id'";
 
-    if (mysqli_query($KONEKSI, $query) ) {
+    if (mysqli_query($KONEKSI, $query)) {
+        echo '<script language="javascript">
+    window.alert("Data Berhasil Di Hapus");
+    </script>';
+    }
+}
+
+
+function tambah_siswa($data, $file, $target)
+{
+
+    global $KONEKSI;
+    global $tgl;
+
+
+    $ID = htmlspecialchars($data["kode"]);
+    $NAMA = htmlspecialchars($data["name"]);
+    $ALAMAT = htmlspecialchars($data["alamat"]);
+    $TELEPON = htmlspecialchars($data["telepon"]);
+    $KELAS = !empty($data["kelas"]) ? "'" . htmlspecialchars($data["kelas"]) . "'" : "null";
+    $JENKEL = htmlspecialchars($data["jenkel"]);
+
+    // echo "<pre>";
+    // print_r($data); // melihat data yang akan diterima
+    // print_r($file); // melihat file yang akan diterima
+    // echo "</pre>";
+
+    // input data ke tabel
+
+    // jika upload berhasil maka insert data ke tabel
+    $gambar_photo = upload_file_new($data, $file, $target);
+
+    // var_dump($gambar_photo);
+    // die;
+
+    //jika gambar tidak di upload operasi di hentikan
+    if (!$gambar_photo) {
+        return false;
+    }
+
+    $sql = "INSERT INTO tbl_siswa SET
+    nis='$ID',
+    nama_siswa='$NAMA',
+    telepon_siswa='$TELEPON',
+    path_photo='$gambar_photo',
+    status='Inactive',
+    alamat_siswa='$ALAMAT',
+    id_kelas=$KELAS,
+    jenkel='$JENKEL',
+    create_at='$tgl' ;";
+
+    // cek apakah query berhasil
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        return true;
+    } else {
+        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
+        return false;
+    }
+}
+
+function edit_siswa($data, $file, $target)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    $ID = htmlspecialchars($data["kode"]);
+    $NAMA = htmlspecialchars($data["name"]);
+    $TELEPON = htmlspecialchars($data["telepon"]);
+    $ALAMAT = htmlspecialchars($data["alamat"]);
+    $KELAS = !empty($data["kelas"]) ? "'" . htmlspecialchars($data["kelas"]) . "'" : "null";
+    $JENKEL = htmlspecialchars($data["jenkel"]);
+    $STATUS = htmlspecialchars($data["status"]);
+    $PHOTO_LAMA = htmlspecialchars($data["photo_db"]);
+
+
+
+
+    //  echo $NAMA . " | ". $TELEPON . " | " . $DOMISILI . " | " . $KTP . " | " . $NOKTP . " | " . $JABATAN. " | " . $START . " | " . $FINISH . " | " . $STATUS . " | " . $target . " | ". $foto_lama . " | " . $ID . " | " . $JENKEL . " | " . $CABANG . " | " . $tgl;
+    //  die;
+    $cek_file_lama = $target . $PHOTO_LAMA; // lokasi file lama
+
+    // cek apakah ada file yang diupload?
+    if (isset($file['Photo']) && $file['Photo']['error'] !== UPLOAD_ERR_NO_FILE) {
+        $foto_baru = upload_file_new($data, $file, $target);
+
+        // pastikan file baru terupload (debugging)
+        echo "File Baru berhasil di upload : " . $foto_baru;
+
+        // pastikan file lama terhapus (unlink)
+        //cek apakah file lama ada?
+        if ($foto_baru &&  file_exists($cek_file_lama)) {
+            if (unlink($cek_file_lama)) {
+                echo "berhasil menghapus file lama";
+            } else {
+                echo "gagal hapus file lama";
+            }
+        } else {
+            echo "gagal menghapus file lama";
+        }
+    } else {
+        $foto_baru = $PHOTO_LAMA;
+        echo '<script language="javascript">
+                window.alert("menggunakan foto lama : ' . $PHOTO_LAMA . '");
+            </script>';
+    }
+
+
+
+    // update data ke tbl_branch
+    $sql = "UPDATE tbl_siswa SET 
+    nama_siswa='$NAMA',
+    telepon_siswa='$TELEPON',
+    path_photo='$foto_baru',
+    status='$STATUS',
+    jenkel='$JENKEL',
+    id_kelas=$KELAS,
+    alamat_siswa='$ALAMAT',
+    update_at='$tgl' WHERE nis='$ID' ";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
+function hapus_siswa($data, $target)
+{
+    global $KONEKSI;
+    $id = $data['id'];
+
+
+    // hapus file gambar milik USER
+    $sql = "SELECT * FROM tbl_siswa WHERE nis='$id'";
+    $hasil = mysqli_query($KONEKSI, $sql) or die('data tidak ditemukan -->' . mysqli_error($KONEKSI));
+    $row = mysqli_fetch_assoc($hasil);
+
+    $photo = $row['path_photo'];
+
+    if (!$photo == "") {
+        unlink($target . $photo);
+    }
+    $query = "DELETE FROM tbl_siswa WHERE nis='$id'";
+
+    if (mysqli_query($KONEKSI, $query)) {
         echo '<script language="javascript">
     window.alert("Data Berhasil Di Hapus");
     </script>';

@@ -35,22 +35,25 @@ foreach ($tahun as $key) {
 $tahun2 = tampil("SELECT * FROM `tbl_tahun_ajaran` WHERE id_tahun_ajaran = '$ID'");
 $same = 0;
 foreach ($tahun2 as $row) {
-    if (strtolower($row['semester_ganjil']) == strtolower($TAHUN1)) {
+    if (strtolower($row['semester_ganjil']) == strtolower($TAHUN1)) {           // tahun
         if (strtolower($row['semester_genap']) == strtolower($TAHUN2)) {
             $same = 1;
         }
     }
 }
 $used = 0;
-$tgl = tampil("SELECT * FROM `tbl_tahun_ajaran` WHERE id_tahun_ajaran !='$ID'");
+$tgl = tampil("SELECT * FROM `tbl_tahun_ajaran` WHERE id_tahun_ajaran !='$ID'");// tgl
 foreach ($tgl as $row) {
     if (strtolower($row['tgl_start']) == strtolower($START) || strtolower($row['tgl_finish']) == strtolower($START) || strtolower($row['tgl_start']) == strtolower($FINISH) || strtolower($row['tgl_finish']) == strtolower($FINISH)) {
         $used = 1;
     }
 }
 // var_dump($_POST);
-// var_dump($_FILES);
-
+// var_dump($_FILES);$tahun = $_POST['id'];
+$sudah = tampil("SELECT * FROM tbl_kelas WHERE id_tahun_ajaran = '$ID'");
+if ($TAHUN1 == $tahun2[0]['semester_ganjil'] && $TAHUN2 == $tahun2[0]['semester_genap'] && $START == $tahun2[0]['tgl_start'] && $FINISH== $tahun2[0]['tgl_finish'] ) {
+   $sudah = "";
+}
 
 // echo $ID . " | " . $NAMA . " | " . $EMAIL . " | " . $ROLE. " | " . $TELEPON. " | " . $PASSWORD1. " | " . $PASSWORD2;
 
@@ -60,13 +63,6 @@ if (empty($TAHUN1) || empty($TAHUN2) || empty($STATUS) || empty($START) || empty
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
         <strong>Error - </strong> Pastikan Semua Data Terisi!!!
     </div>
-    <?php
-    // } elseif ($used == 1) {
-    ?>
-    <!-- <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-        <strong>Error - </strong> Data Tahun Sudah Ada!!!
-    </div> -->
 <?php
 } elseif ($used == 1) {
 ?>
@@ -80,6 +76,13 @@ if (empty($TAHUN1) || empty($TAHUN2) || empty($STATUS) || empty($START) || empty
     <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
         <strong>Error - </strong> Tahun Tidak Boleh Sama!!!
+    </div>
+<?php
+} elseif (!empty($sudah)) {
+?>
+    <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        <strong>Error - </strong> Tolong Hapus Data Kelas Yang Terhubung Ke Data Tahun Ajaran!!!
     </div>
 <?php
 } elseif ($TAHUN1 > $TAHUN2) {
