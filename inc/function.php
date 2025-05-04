@@ -918,9 +918,6 @@ function edit_guru($data, $file, $target)
     $STATUS = htmlspecialchars($_POST["status"]);
     $PHOTO_LAMA = htmlspecialchars($_POST["photo_db"]);
 
-    if ($STATUS == "Inactive") {
-        mysqli_query($KONEKSI, "UPDATE tbl_kelas SET  wali_kelas=NULL  WHERE wali_kelas = '$ID'");
-    }
 
 
 
@@ -1320,6 +1317,90 @@ function hapus_siswa($data, $target)
         unlink($target . $photo);
     }
     $query = "DELETE FROM tbl_siswa WHERE nis='$id'";
+
+    if (mysqli_query($KONEKSI, $query)) {
+        echo '<script language="javascript">
+    window.alert("Data Berhasil Di Hapus");
+    </script>';
+    }
+}
+
+function tambah_wali_kelas($data)
+{
+
+    global $KONEKSI;
+    global $tgl;
+
+
+    $WALI = htmlspecialchars($data["wali"]);
+    $TAHUN = htmlspecialchars($data["tahun"]);
+    $KELAS = htmlspecialchars($data["kelas"]);
+
+
+    // echo "<pre>";
+    // print_r($data); // melihat data yang akan diterima
+    // print_r($file); // melihat file yang akan diterima
+    // echo "</pre>";
+
+    // input data ke tabel
+
+    // jika upload berhasil maka insert data ke tabel
+
+    $sql = "INSERT INTO tbl_wali_kelas SET
+    id_tahun_ajaran='$TAHUN',
+    id_kelas='$KELAS',
+    wali_kelas='$WALI'";
+
+    // cek apakah query berhasil
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        return true;
+    } else {
+        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
+        return false;
+    }
+}
+
+function edit_wali_kelas($data)
+{
+    global $KONEKSI;
+    global $tgl;
+
+
+    $WALI = htmlspecialchars($data["wali"]);
+    $TAHUN = htmlspecialchars($data["tahun"]);
+    $KELAS = htmlspecialchars($data["kelas"]);
+
+
+    // update data ke tbl_branch
+    $sql = "UPDATE tbl_wali_kelas SET 
+    id_tahun_ajaran='$TAHUN',
+    wali_kelas='$WALI' WHERE id_kelas='$KELAS'";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
+function hapus_wali_kelas($data)
+{
+    global $KONEKSI;
+    $id = $data['id'];
+
+
+    $query = "DELETE FROM tbl_wali_kelas WHERE id_kelas='$id'";
 
     if (mysqli_query($KONEKSI, $query)) {
         echo '<script language="javascript">

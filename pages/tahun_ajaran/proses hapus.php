@@ -9,6 +9,7 @@ require_once "../inc/function.php";
 
 $tahun = $_POST['id'];
 $tahun = tampil("SELECT * FROM tbl_kelas WHERE id_tahun_ajaran = '$tahun'");
+
 if (empty($tahun)) {
     hapus_tahun_ajaran($_POST);
     echo "Proses Hapus Data Berhasil....";

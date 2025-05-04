@@ -26,7 +26,7 @@
             include "proses_tambah.php";
         }
         $tahun = tampil("SELECT `tbl_tahun_ajaran`.`simbol_tahun_ajaran` FROM `tbl_tahun_ajaran` WHERE status = 'Active'");
-        $kelas = tampil("SELECT `tbl_kelas`.*, `tbl_jurusan`.*, `tbl_guru`.*, `tbl_tahun_ajaran`.* FROM `tbl_kelas` 	LEFT JOIN `tbl_jurusan` ON `tbl_kelas`.`jurusan` = `tbl_jurusan`.`id_jurusan` 	LEFT JOIN `tbl_guru` ON `tbl_kelas`.`wali_kelas` = `tbl_guru`.`nip` 	LEFT JOIN `tbl_tahun_ajaran` ON `tbl_kelas`.`id_tahun_ajaran` = `tbl_tahun_ajaran`.`id_tahun_ajaran` ORDER BY (CASE WHEN tbl_tahun_ajaran.status = 'Active' THEN 0 ELSE 1 END), tbl_tahun_ajaran.simbol_tahun_ajaran ASC, tbl_kelas.tingkat ASC");
+        $kelas = tampil("SELECT tbl_kelas.id_kelas, tbl_kelas.tingkat, CONCAT( tbl_jurusan.simbol_jur, ' ( ', tbl_tahun_ajaran.semester_ganjil, ' - ', tbl_tahun_ajaran.semester_genap, ' ) ' ) AS nama_kelas FROM tbl_kelas LEFT JOIN tbl_jurusan ON tbl_kelas.jurusan = tbl_jurusan.id_jurusan LEFT JOIN tbl_tahun_ajaran ON tbl_kelas.id_tahun_ajaran = tbl_tahun_ajaran.id_tahun_ajaran WHERE status ='Active' ORDER BY nama_kelas ASC,tbl_kelas.tingkat ASC");
         ?>
 
         <div class="row">
@@ -68,7 +68,7 @@
                                     <option value=""> - </option>
                                         <?php
                                         foreach ($kelas as $key) {
-                                            echo '<option value="' . $key['id_kelas'] . '">' . $key['tingkat'] . " - " . $key['simbol_jur'] . ' (' . $key['semester_ganjil'] . " - " . $key['semester_genap'] . ')</option>';
+                                            echo '<option value="' . $key['id_kelas'] . '">' . $key['tingkat'] . " - " . $key['nama_kelas'] . '</option>';
                                         }
                                         ?>
 

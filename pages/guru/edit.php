@@ -89,7 +89,7 @@ while ($row = mysqli_fetch_assoc($edit)) {
                                     <img src="../assets/images/warga_sekolah/<?= empty($photo) ? 'user.jpg' : $photo; ?>" class="avatar-xl rounded-circle" width="150px" alt="">
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <p class="  form-label">Status Petugas</p>
+                                    <p class="  form-label">Status Guru</p>
                                     <div class=" mt-2">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" id="Active" name="status" class="form-check-input" value="Active" <?= $status == "Active" ? 'checked' : ""; ?>>
