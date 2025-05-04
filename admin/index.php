@@ -282,6 +282,11 @@ foreach ($sql_login as $user_login) {
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
+                                    <a href="?inc=wali_kelas" class="side-nav-link">
+                                        <span> Wali Kelas</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
                                     <a href="?inc=siswa" class="side-nav-link">
                                         <span> Siswa</span>
                                     </a>

@@ -12,15 +12,11 @@ while ($row = mysqli_fetch_assoc($edit)) {
     $tingkat = $row['tingkat'];
     $tahun_ajaran = $row['id_tahun_ajaran'];
     $id_jurusan = $row['jurusan'];
-    $guru = $row['wali_kelas'];
 }
 // var_dump($photo);
 
-$tahun = tampil("SELECT * FROM tbl_tahun_ajaran");
-$kelas = tampil("SELECT * FROM tbl_kelas WHERE wali_kelas != '';");
 
 
-$wakel = tampil("SELECT * FROM tbl_guru WHERE status = 'Active' ORDER BY nama_guru ASC");
 $jurusan = tampil("SELECT * FROM tbl_jurusan");
 
 
@@ -62,48 +58,14 @@ $jurusan = tampil("SELECT * FROM tbl_jurusan");
                             <div class="row g-2">
                                 <input type="hidden" name="kode" value="<?= $id ?>">
                                 <div class="mb-3  col-md-6">
-                                    <label for="kode" class="form-label">Tingkatan Kelas</label>
-                                    <input type="number" class="form-control" value="<?= $tingkat ?>" name="tingkat" placeholder="Tingkatan">
-                                </div>
-                                <div class="mb-3  col-md-6">
-                                    <label for="tahun" class="form-label">Tahun Ajaran</label>
-                                    <select class="form-select" id="tahun" name="tahun">
-                                        <?php
-                                        foreach ($tahun as $key) {
-                                            $selected = "";
-                                            if ($key['id_tahun_ajaran'] == $tahun_ajaran) {
-                                                $selected = "selected";
-                                            }
-                                            echo '<option value="' . $key['id_tahun_ajaran'] . '"' . $selected . '>' . $key['semester_ganjil'] . " - " . $key['semester_genap'] . '</option>';
-                                        }
-                                        ?>
-
+                                    <label for="tingkat" class="form-label">Tingkatan Kelas</label>
+                                    <select name="tingkat" class="form-select" id="tingkat">
+                                    <option value="10" <?= ($tingkat == 10) ? 'selected' : ''?>>10</option>
+                                    <option value="11" <?= ($tingkat == 11) ? 'selected' : ''?>>11</option>
+                                    <option value="12" <?= ($tingkat == 12) ? 'selected' : ''?>>12</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row g-2">
-                                <div class="mb-3  col-md-6">
-                                    <label for="guru" class="form-label">Wali Kelas</label>
-                                    <select class="form-select" id="guru" name="guru">
-                                        <option value=""> - </option>
-                                        <?php
-                                        if (!empty($wakel)) {
-                                            // Ambil semua NIP wali kelas dari array $kelas
-                                            $waliKelasNips = !empty($kelas) ? array_column($kelas, 'wali_kelas') : [];
-
-                                            foreach ($wakel as $wakelItem) {
-                                                if ($wakelItem['nip'] == $guru) {
-                                                    echo '<option value="' . htmlspecialchars($wakelItem['nip']) . '"selected>' . htmlspecialchars($wakelItem['nama_guru']) . ' (' . htmlspecialchars($wakelItem['nip']) . ')</option>';
-                                                } elseif (!in_array($wakelItem['nip'], $waliKelasNips)) {
-                                                    echo '<option value="' . htmlspecialchars($wakelItem['nip']) . '">' . htmlspecialchars($wakelItem['nama_guru']) . ' (' . htmlspecialchars($wakelItem['nip']) . ')</option>';
-                                                }
-                                            }
-                                        }
-                                        ?>
-
-
-                                    </select>
-                                </div>
+                                <input type="hidden" value="<?= $tahun_ajaran ?>" name="tahun">
                                 <div class="mb-3 col-md-6">
                                     <label for="jurusan" class="form-label">Jurusan</label>
                                     <select class="form-select" id="jurusan" name="jurusan">

@@ -5,13 +5,13 @@ require_once '../inc/function.php';
 
 // $GAMBAR = $_FILES['Photo']['tmp_name']; //tangkap data file
 
-$TINGKAT = htmlspecialchars($_POST["tingkat"]);
+$WALI = htmlspecialchars($_POST["wali"]);
 $TAHUN = htmlspecialchars($_POST["tahun"]);
-$JURUSAN = htmlspecialchars($_POST["jurusan"]);
+$KELAS = htmlspecialchars($_POST["kelas"]);
 
 $used = false;
-$kelas = tampil("SELECT * FROM `tbl_kelas` WHERE id_tahun_ajaran = '$TAHUN' AND tingkat = '$TINGKAT' AND jurusan = '$JURUSAN'");
-if (!empty($kelas)) {
+$wakel = tampil("SELECT * FROM `tbl_wali_kelas` WHERE id_tahun_ajaran = '$TAHUN' AND wali_kelas = '$WALI' AND id_kelas = '$KELAS'");
+if (!empty($wakel)) {
     $used = true;
 }
 
@@ -20,7 +20,7 @@ if (!empty($kelas)) {
 
 // echo $ID . " | " . $NAMA . " | " . $EMAIL . " | " . $ROLE. " | " . $TELEPON. " | " . $PASSWORD1. " | " . $PASSWORD2. " | " . $JENKEL. " | " . $CABANG. " | ". $DOMISILI. " | " . $KTP. " | " . $NOKTP. " | " . $JABATAN. " | " . $START. " | ". $FINISH. " | " . $STATUS. " | " . $PASSWORD1. " | " . $PASSWORD2;
 
-if (empty($TINGKAT) || empty($TAHUN)  || empty($JURUSAN)) { // jika dari pengecekan sebelumnya ada field yang kosong maka akan menampilkan pesan error
+if (empty($WALI) || empty($TAHUN)  || empty($KELAS)) { // jika dari pengecekan sebelumnya ada field yang kosong maka akan menampilkan pesan error
 ?>
     <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -31,26 +31,26 @@ if (empty($TINGKAT) || empty($TAHUN)  || empty($JURUSAN)) { // jika dari pengece
 ?>
     <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-        <strong>Error - </strong> Data Kelas Sudah Ada!!!
+        <strong>Error - </strong> Data Wali Kelas Sudah Ada!!!
     </div>
     <?php
 } else {
-    if (tambah_kelas($_POST) > 0) {
+    if (tambah_wali_kelas($_POST) > 0) {
     ?>
         <div class="alert alert-success  text-bg-success border-0 fade show" role="alert">
             Data Berhasil Ditambahkan
         </div>
-        <meta http-equiv="refresh" content="1; url=index.php?inc=kelas">
+        <meta http-equiv="refresh" content="1; url=index.php?inc=wali_kelas">
     <?php
     } else {
     ?>
         <div class="alert alert-danger  text-bg-danger border-0 fade show" role="alert">
             <strong>Error - </strong> Data Gagal Ditambahkan!!!
         </div>
-        <meta http-equiv="refresh" content="1; url=index.php?inc=kelas">
+        <meta http-equiv="refresh" content="1; url=index.php?inc=wali_kelas">
 <?php
     }
-    echo '<meta http-equiv="refresh" content="1; url=index.php?inc=kelas">';
+    echo '<meta http-equiv="refresh" content="1; url=index.php?inc=wali_kelas">';
 }
 
 ?>

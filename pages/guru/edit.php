@@ -33,7 +33,7 @@ while ($row = mysqli_fetch_assoc($edit)) {
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                            <li class="breadcrumb-item active">Settings</li>
+                            <li class="breadcrumb-item active">Warga Sekolah</li>
                             <li class="breadcrumb-item "><a href="<?= $_SERVER['PHP_SELF'] . "?inc=" . $_GET['inc']; ?>">Guru</a></li>
                         </ol>
                     </div>
@@ -89,7 +89,7 @@ while ($row = mysqli_fetch_assoc($edit)) {
                                     <img src="../assets/images/warga_sekolah/<?= empty($photo) ? 'user.jpg' : $photo; ?>" class="avatar-xl rounded-circle" width="150px" alt="">
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <p class="  form-label">Status Petugas</p>
+                                    <p class="  form-label">Status Guru</p>
                                     <div class=" mt-2">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" id="Active" name="status" class="form-check-input" value="Active" <?= $status == "Active" ? 'checked' : ""; ?>>

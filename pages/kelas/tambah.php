@@ -25,11 +25,9 @@
         if (isset($_POST['tambah'])) {
             include "proses_tambah.php";
         }
-        $tahun = tampil("SELECT * FROM tbl_tahun_ajaran");
-        $kelas = tampil("SELECT * FROM tbl_kelas WHERE wali_kelas != '';");
+        $tahun = tampil("SELECT * FROM tbl_tahun_ajaran WHERE status ='Active'");
 
 
-        $wakel = tampil("SELECT * FROM tbl_guru WHERE status = 'Active' ORDER BY nama_guru ASC");
         $jurusan = tampil("SELECT * FROM tbl_jurusan");
         ?>
 
@@ -41,47 +39,14 @@
                         <form method="post" enctype="multipart/form-data">
                             <div class="row g-2">
                                 <div class="mb-3  col-md-6">
-                                    <label for="kode" class="form-label">Tingkatan Kelas</label>
-                                    <input type="number" class="form-control" name="tingkat" placeholder="Tingkatan">
-                                </div>
-                                <div class="mb-3  col-md-6">
-                                    <label for="tahun" class="form-label">Tahun Ajaran</label>
-                                    <select class="form-select" id="tahun" name="tahun">
-                                        <?php
-                                        foreach ($tahun as $key) {
-                                            $selected = "";
-                                            if ($key['status'] == "Active") {
-                                                $selected = "selected";
-                                            }
-                                            echo '<option value="' . $key['id_tahun_ajaran'] . '"' . $selected . '>' . $key['semester_ganjil'] . " - " . $key['semester_genap'] . '</option>';
-                                        }
-                                        ?>
-
+                                    <label for="tingkat" class="form-label">Tingkatan Kelas</label>
+                                    <select name="tingkat" class="form-select" id="tingkat">
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row g-2">
                                 <div class="mb-3  col-md-6">
-                                    <label for="guru" class="form-label">Wali Kelas</label>
-                                    <select class="form-select" id="guru" name="guru">
-                                        <option value=""> - </option>
-                                        <?php
-                                        if (!empty($wakel)) {
-                                            // Ambil semua NIP wali kelas dari array $kelas
-                                            $waliKelasNips = !empty($kelas) ? array_column($kelas, 'wali_kelas') : [];
-
-                                            foreach ($wakel as $wakelItem) {
-                                                if (!in_array($wakelItem['nip'], $waliKelasNips)) {
-                                                    echo '<option value="' . htmlspecialchars($wakelItem['nip']) . '">' . htmlspecialchars($wakelItem['nama_guru']) . ' (' . htmlspecialchars($wakelItem['nip']) . ')</option>';
-                                                }
-                                            }
-                                        }
-                                        ?>
-
-
-                                    </select>
-                                </div>
-                                <div class="mb-3 col-md-6">
                                     <label for="jurusan" class="form-label">Jurusan</label>
                                     <select class="form-select" id="jurusan" name="jurusan">
                                         <option value="" disabled selected> Pilih Jurusan Kelas </option>
@@ -93,6 +58,7 @@
 
 
                                     </select>
+                                    <input type="hidden" value="<?= $tahun[0]['id_tahun_ajaran'] ?>" name="tahun">
                                 </div>
                             </div>
 
