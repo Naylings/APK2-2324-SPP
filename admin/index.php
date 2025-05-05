@@ -268,12 +268,12 @@ foreach ($sql_login as $user_login) {
 
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#user" aria-expanded="false" aria-controls="user" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#user1" aria-expanded="false" aria-controls="user1" class="side-nav-link">
                             <i class=" uil-users-alt"></i>
                             <span> Warga Sekolah </span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="user">
+                        <div class="collapse" id="user1">
                             <ul class="side-nav-second-level">
 
                                 <li class="side-nav-item">
@@ -324,6 +324,13 @@ foreach ($sql_login as $user_login) {
                         <a href="?inc=tahun_ajaran" class="side-nav-link">
                             <i class="uil-bell-school"></i>
                             <span> Tahun Ajaran </span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a href="?inc=jenis_pem" class="side-nav-link">
+                            <i class="uil-money-bill"></i>
+                            <span> Jenis Pembayaran </span>
                         </a>
                     </li>
 
