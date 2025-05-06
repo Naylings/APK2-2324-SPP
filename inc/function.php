@@ -1491,7 +1491,7 @@ function hapus_jenis($data)
     $id = $data['id'];
 
 
-    $query = "DELETE FROM tbl_wali_kelas WHERE id_kelas='$id'";
+    $query = "DELETE FROM tbl_jenis_pembayaran WHERE id_jenis='$id'";
 
     if (mysqli_query($KONEKSI, $query)) {
         echo '<script language="javascript">
