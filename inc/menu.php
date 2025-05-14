@@ -53,6 +53,10 @@ switch ($pages) {
                     include "../pages/siswa/siswa.php";
                     break;
 
+    
+                case 'jenis_pem':
+                    include "../pages/jenis_pem/jenis_pem.php";
+                    break;
     default:
         include "../pages/master/dashboard.php";
         break;

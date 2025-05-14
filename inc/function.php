@@ -1408,3 +1408,94 @@ function hapus_wali_kelas($data)
     </script>';
     }
 }
+
+function  tambah_jenis($data)
+{
+
+    global $KONEKSI;
+    global $tgl;
+
+
+    $BULANAN = htmlspecialchars($data["bulanan"]);
+    $TAHUN = htmlspecialchars($data["tahun"]);
+    $NAME = htmlspecialchars($data["name"]);
+    $TUNAI = htmlspecialchars($data["tunai"]);
+
+
+    // echo "<pre>";
+    // print_r($data); // melihat data yang akan diterima
+    // print_r($file); // melihat file yang akan diterima
+    // echo "</pre>";
+
+    // input data ke tabel
+
+    // jika upload berhasil maka insert data ke tabel
+
+    $sql = "INSERT INTO tbl_jenis_pembayaran SET
+    nama_jenis='$NAME',
+    id_tahun_ajaran='$TAHUN',
+    tunai='$TUNAI',
+    bulanan='$BULANAN'";
+
+    // cek apakah query berhasil
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        return true;
+    } else {
+        echo "<script>alert('Data gagal ditambahkan (" . mysqli_error($KONEKSI) . ")');</script>";
+        return false;
+    }
+}
+
+function edit_jenis($data)
+{
+    global $KONEKSI;
+    global $tgl;
+
+
+    $BULANAN = htmlspecialchars($data["bulanan"]);
+    $TAHUN = htmlspecialchars($data["tahun"]);
+    $NAME = htmlspecialchars($data["name"]);
+    $TUNAI = htmlspecialchars($data["tunai"]);
+    $ID = htmlspecialchars($data["id"]);
+
+
+    // update data ke tbl_branch
+
+    $sql = "UPDATE tbl_jenis_pembayaran SET
+    nama_jenis='$NAME',
+    id_tahun_ajaran='$TAHUN',
+    tunai='$TUNAI',
+    bulanan='$BULANAN' WHERE id_jenis='$ID'";
+
+
+
+    // cek query update
+    if (mysqli_query($KONEKSI, $sql)) {
+        echo '<script language="javascript">
+                window.alert("Data Berhasil Di Update");
+            </script>';
+    } else {
+        echo '<script language="javascript">
+                window.alert("Data Gagal Di Update");
+            </script>';
+    }
+
+
+    return mysqli_affected_rows($KONEKSI);
+}
+
+function hapus_jenis($data)
+{
+    global $KONEKSI;
+    $id = $data['id'];
+
+
+    $query = "DELETE FROM tbl_jenis_pembayaran WHERE id_jenis='$id'";
+
+    if (mysqli_query($KONEKSI, $query)) {
+        echo '<script language="javascript">
+    window.alert("Data Berhasil Di Hapus");
+    </script>';
+    }
+}
