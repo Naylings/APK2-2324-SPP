@@ -8,9 +8,17 @@ require_once "../inc/function.php";
 
 
 $tahun = $_POST['id'];
-$tahun = tampil("SELECT * FROM tbl_kelas WHERE id_tahun_ajaran = '$tahun'");
+$tahun_ajar = tampil("SELECT * FROM tbl_tahun_ajaran WHERE id_tahun_ajaran = '$tahun'");
+$tahun_ajar = $tahun_ajar[0]['simbol_tahun_ajaran'];
 
-if (empty($tahun)) {
+
+
+$kelas = tampil("SELECT * FROM tbl_kelas WHERE id_tahun_ajaran = '$tahun'");
+$wakel = tampil("SELECT * FROM tbl_wali_kelas WHERE id_tahun_ajaran = '$tahun'");
+$jenis = tampil("SELECT * FROM tbl_jenis_pembayaran WHERE id_tahun_ajaran = '$tahun'");
+$siswa = tampil("SELECT * FROM tbl_siswa WHERE LEFT(nis, 4) = '$tahun_ajar'");
+
+if (empty($kelas) || empty($wakel) || empty($jenis) || empty($siswa)) {
     hapus_tahun_ajaran($_POST);
     echo "Proses Hapus Data Berhasil....";
 ?>

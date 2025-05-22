@@ -21,6 +21,23 @@
         <!-- end page title -->
 
 
+        <div class="row">
+            <div class="col-12">
+                <div class="mb-3">
+                    <label class="form-label">Cari Siswa</label>
+                    <form method="GET" action="index.php">
+                        <input type="hidden" name="inc" value="siswa">
+                        <input type="hidden" name="aksi" value="view">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="id" placeholder="Masukkan NIS Siswa">
+                            <button class="btn btn-dark" type="submit">Cari</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div><!-- end col-->
+        </div> <!-- end row-->
+
 
         <div class="row">
             <div class="col-12">

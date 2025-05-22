@@ -281,10 +281,10 @@ function tambah_user($data, $file, $target)
     global $KONEKSI;
     global $tgl;
 
-    $START;
-    $FINISH;
+    $START = '';
+    $FINISH = '';
     $STATUS = "Inactive";
-    $redirect;
+    $redirect = '';
     $ROLE = "Admin";
     $ID = htmlspecialchars($data["kode"]);
     $NAMA = htmlspecialchars($data["name"]);
@@ -375,8 +375,8 @@ function edit_user($data, $file, $target)
     global $KONEKSI;
     global $tgl;
 
-    $START;
-    $FINISH;
+    $START = '';
+    $FINISH = '';
     $STATUS = "Inactive";
     $ID = htmlspecialchars($_POST["kode"]);
     $NAMA = htmlspecialchars($_POST["name"]);
@@ -1498,4 +1498,92 @@ function hapus_jenis($data)
     window.alert("Data Berhasil Di Hapus");
     </script>';
     }
+}
+
+
+function tambah_pembayaran($data)
+{
+    global $KONEKSI;
+    $ID = htmlspecialchars($data["id"]);
+    $SEKALI = isset($data["data_pembayaran"]) ? array_map('htmlspecialchars', $data["data_pembayaran"]) : [];
+    $BULANAN = isset($data["data_pembayaran_bulan"]) ? array_map('htmlspecialchars', $data["data_pembayaran_bulan"]) : [];
+
+    // Hapus dulu data lama, cek error
+    if (!mysqli_query($KONEKSI, "DELETE FROM tbl_pembayaran WHERE nis = '$ID' AND status = 0;")) {
+        return false; // gagal delete
+    }
+
+    // Insert data sekali, cek error tiap insert
+    foreach ($SEKALI as $id_jenis) {
+        if (!mysqli_query($KONEKSI, "INSERT INTO tbl_pembayaran (nis, id_jenis, status) VALUES ('$ID', '$id_jenis', 0)")) {
+            return false; // gagal insert
+        }
+    }
+
+    // Insert data bulanan, cek error tiap insert
+    foreach ($BULANAN as $item) {
+        list($id_jenis, $id_bulan) = explode('-', $item);
+        if (!mysqli_query($KONEKSI, "INSERT INTO tbl_pembayaran (nis, id_jenis, id_bulan, status) VALUES ('$ID', '$id_jenis', '$id_bulan', 0)")) {
+            return false; // gagal insert
+        }
+    }
+
+    // Semua query berhasil
+    return true;
+}
+
+function import_kelas($data)
+{
+    global $KONEKSI;
+    global $tgl;
+
+    $sheetIndex = (int) $data['sheet_index'];
+    $id_kelas = (int) $data['id_kelas'];
+    $filePath = $data['uploaded_file'];
+
+    try {
+        
+
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filePath);
+        $sheet = $spreadsheet->getSheet($sheetIndex);
+        $rows = $sheet->toArray();
+    } catch (Exception $e) {
+        return 0; // Gagal baca file
+    }
+    $tahun = tampil("SELECT `tbl_tahun_ajaran`.`simbol_tahun_ajaran` FROM `tbl_tahun_ajaran` WHERE status = 'Active'");
+
+    // Validasi foreign key kelas
+
+    $berhasil = 0;
+
+    // Mulai dari baris kedua (skip header)
+    for ($i = 1; $i < count($rows); $i++) {
+        $row = $rows[$i];
+        $nama     = trim($row[0] ?? '');
+        $telepon  = trim($row[1] ?? '');
+        $alamat   = trim($row[2] ?? '');
+        $jenkel   = trim($row[3] ?? '');
+
+        // Validasi wajib isi
+        if ($nama == '' || $telepon == '' || $alamat == '' || $jenkel == '') continue;
+        $nis = autonum("tbl_siswa", "nis", 6, $tahun[0]['simbol_tahun_ajaran']);
+
+        // Insert data
+        $query = "INSERT INTO tbl_siswa (
+            nis, nama_siswa, telepon_siswa, alamat_siswa, jenkel, status, id_kelas, create_at, update_at
+        ) VALUES (
+            '$nis','$nama', '$telepon', '$alamat', '$jenkel', 'Active', '$id_kelas', '$tgl', '$tgl'
+        )";
+        
+
+        if (mysqli_query($KONEKSI, $query)) {
+            $berhasil++;
+        }
+    }
+
+    if (file_exists($filePath)) {
+        unlink($filePath);
+    }
+
+    return $berhasil;
 }

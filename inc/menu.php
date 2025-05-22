@@ -57,6 +57,14 @@ switch ($pages) {
                 case 'jenis_pem':
                     include "../pages/jenis_pem/jenis_pem.php";
                     break;
+    
+                case 'pem':
+                    include "../pages/pembayaran/pembayaran.php";
+                    break;
+    
+                case 'import':
+                    include "../pages/import/import.php";
+                    break;
     default:
         include "../pages/master/dashboard.php";
         break;

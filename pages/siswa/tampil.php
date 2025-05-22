@@ -32,7 +32,8 @@
                             </div>
                             <div class="col-auto ms-auto">
                                 <div class="btn-group mb-2 ">
-                                    <a role="button" href="?inc=siswa&aksi=add" class="btn btn-success">Tambah Siswa</a>
+                                    <a role="button" href="?inc=siswa&aksi=add" class="btn btn-primary">Tambah Siswa</a>
+                                    <a role="button" href="?inc=import" class="btn btn-success">Import Siswa ( .xlsx / .xls )</a>
                                     <!-- <button type="button" class="btn btn-warning">Warning</button>
                                     <button type="button" class="btn btn-danger">Danger</button> -->
                                 </div>
@@ -94,7 +95,7 @@
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                             <a class="dropdown-item" href="?inc=siswa&aksi=edit&id=<?= $user['nis'] ?>">Edit</a>
                                                             <a class="dropdown-item" href="?inc=siswa&aksi=delete&id=<?= $user['nis'] ?>">Delete</a>
-                                                            <a class="dropdown-item" href="#">View</a>
+                                                            <a class="dropdown-item" href="?inc=siswa&aksi=view&id=<?= $user['nis'] ?>">View</a>
                                                         </div>
                                                     </div>
                                                 </td>

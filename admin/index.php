@@ -1,6 +1,8 @@
 <?php
 @session_start();
 require_once '../inc/function.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
 
 
 cek_role_user(@$_SESSION['email'], @$_SESSION['level']);

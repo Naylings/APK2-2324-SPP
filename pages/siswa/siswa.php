@@ -25,7 +25,6 @@ switch ($pages) {
                 include "view.php";
                 break;
 
-
     default:
         include "tampil.php";
         break;
