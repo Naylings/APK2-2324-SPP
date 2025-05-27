@@ -17,7 +17,7 @@ if (!$KONEKSI) {
 
 
 // auto numering
-function  autonum($tabel, $kolom, $lebar = 0, $awalan)
+function  autonum($tabel, $kolom, $lebar = 0, $awalan ="")
 {
     global $KONEKSI;
 
