@@ -2,7 +2,6 @@
 ob_start();
 require_once '../inc/function.php';
 
-
 // $GAMBAR = $_FILES['Photo']['tmp_name']; //tangkap data file
 
 
@@ -13,20 +12,27 @@ require_once '../inc/function.php';
 // echo $ID . " | " . $NAMA . " | " . $EMAIL . " | " . $ROLE. " | " . $TELEPON. " | " . $PASSWORD1. " | " . $PASSWORD2. " | " . $JENKEL. " | " . $CABANG. " | ". $DOMISILI. " | " . $KTP. " | " . $NOKTP. " | " . $JABATAN. " | " . $START. " | ". $FINISH. " | " . $STATUS. " | " . $PASSWORD1. " | " . $PASSWORD2;
 
 
-if (import_kelas($_POST) > 0) {
-?>
-    <div class="alert alert-success  text-bg-success border-0 fade show" role="alert">
-        Data Berhasil Ditambahkan
+$result = import_kelas($_POST);
+
+if ($result['success']) {
+    $berhasil = $result['count'];
+    ?>
+    <div class="alert alert-success text-bg-success border-0 fade show" role="alert">
+        ✅ Data <?= $berhasil ?> siswa berhasil ditambahkan.
     </div>
-    <meta http-equiv="refresh" content="1; url=index.php?inc=siswa">
-<?php
+    <meta http-equiv="refresh" content="1.5; url=index.php?inc=siswa">
+    <?php
 } else {
-?>
-    <div class="alert alert-danger  text-bg-danger border-0 fade show" role="alert">
-        <strong>Error - </strong> Data Gagal Ditambahkan!!!
+    ?>
+    <div class="alert alert-danger text-bg-danger border-0 fade show" role="alert">
+        <strong>Import dibatalkan:</strong><br>
+        <ul>
+            <?php foreach ($result['errors'] as $err): ?>
+                <li><?= htmlspecialchars($err) ?></li>
+            <?php endforeach; ?>
+        </ul>
     </div>
-    <meta http-equiv="refresh" content="1; url=index.php?inc=siswa">
-<?php
+    <?php
 }
+
 ?>
-<meta http-equiv="refresh" content="1; url=index.php?inc=siswa">

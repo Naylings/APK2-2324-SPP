@@ -100,15 +100,29 @@ if (isset($_POST['login'])) {
                     <!-- end card -->
 
                     <div class="row mt-3">
-                            <div class="col-12 text-center">
-                                <p class="text-muted">Belum Punya Akun? <a href="register.php" class="text-muted ms-1"><b>Sign Up</b></a></p>
-                            </div> <!-- end col -->
-                        </div>
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Belum Punya Akun? <a href="register.php" class="text-muted ms-1 me-1"><b>Sign Up</b></a> Atau Pakai <a  class="text-muted ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><b>Akun Ini</b></a></p>
+                        </div> <!-- end col -->
+                    </div>
                     <!-- end row -->
 
                 </div> <!-- end col -->
             </div>
             <!-- end row -->
+
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasRightLabel">Akun Admin</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <h4 class="mt-3">Email :</h4>
+                    <h5 class="">admin@gmail.com</h5>
+                    <h4 class="mt-3">Password :</h4>
+                    <h5 class="">123456</h5>
+                </div>
+            </div>
         </div>
         <!-- end container -->
     </div>

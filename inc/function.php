@@ -1541,22 +1541,38 @@ function import_kelas($data)
     $id_kelas = (int) $data['id_kelas'];
     $filePath = $data['uploaded_file'];
 
-    try {
-        
 
+
+    try {
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filePath);
         $sheet = $spreadsheet->getSheet($sheetIndex);
         $rows = $sheet->toArray();
+
+        $headers = array_shift($rows);
+
+        $rows = array_map(function ($row) {
+            if (isset($row[0])) {
+                $row[0] = ucwords(strtolower($row[0]));
+            }
+            return $row;
+        }, $rows);
+
+        usort($rows, fn($a, $b) => strcasecmp($a[0] ?? '', $b[0] ?? ''));
+        array_unshift($rows, $headers);
     } catch (Exception $e) {
-        return 0; // Gagal baca file
+        return [
+            'success' => false,
+            'errors' => ['File "' . $filePath . '" tidak ditemukan.']
+        ];
     }
-    $tahun = tampil("SELECT `tbl_tahun_ajaran`.`simbol_tahun_ajaran` FROM `tbl_tahun_ajaran` WHERE status = 'Active'");
 
-    // Validasi foreign key kelas
+    $tahun = tampil("SELECT simbol_tahun_ajaran FROM tbl_tahun_ajaran WHERE status = 'Active'");
+    $last_kid = tampil("SELECT nis FROM tbl_siswa ORDER BY nis DESC LIMIT 1");
+    $last_kid = substr($last_kid[0]['nis'], 4);
 
-    $berhasil = 0;
+    $errors = [];
 
-    // Mulai dari baris kedua (skip header)
+    // Tahap 1: Validasi semua baris dulu
     for ($i = 1; $i < count($rows); $i++) {
         $row = $rows[$i];
         $nama     = trim($row[0] ?? '');
@@ -1564,26 +1580,53 @@ function import_kelas($data)
         $alamat   = trim($row[2] ?? '');
         $jenkel   = trim($row[3] ?? '');
 
-        // Validasi wajib isi
-        if ($nama == '' || $telepon == '' || $alamat == '' || $jenkel == '') continue;
-        $nis = autonum("tbl_siswa", "nis", 6, $tahun[0]['simbol_tahun_ajaran']);
+        if ($nama === '' || $telepon === '' || $alamat === '' || $jenkel === '') {
+            $previewNama = implode(' | ', array_filter($row));
+            $errors[] = "Baris ke-" . ($i + 1) . " tidak lengkap. Data: \"$previewNama\"";
+        }
+    }
 
-        // Insert data
+    // Jika ada error, tampilkan semua sekaligus
+    if (!empty($errors)) {
+        if (file_exists($filePath)) unlink($filePath);
+        return [
+            'success' => false,
+            'errors' => $errors
+        ];
+    }
+
+    // Tahap 2: Semua valid, lakukan insert
+    $berhasil = 0;
+    for ($i = 1; $i < count($rows); $i++) {
+        $row = $rows[$i];
+        $nama     = mysqli_real_escape_string($KONEKSI, trim($row[0] ?? ''));
+        $telepon  = mysqli_real_escape_string($KONEKSI, trim($row[1] ?? ''));
+        $alamat   = mysqli_real_escape_string($KONEKSI, trim($row[2] ?? ''));
+        $jenkel   = mysqli_real_escape_string($KONEKSI, trim($row[3] ?? ''));
+
+        $last_kid++;
+        $nis = $tahun[0]['simbol_tahun_ajaran'] . str_pad($last_kid, 6, "0", STR_PAD_LEFT);
+
         $query = "INSERT INTO tbl_siswa (
             nis, nama_siswa, telepon_siswa, alamat_siswa, jenkel, status, id_kelas, create_at, update_at
         ) VALUES (
-            '$nis','$nama', '$telepon', '$alamat', '$jenkel', 'Active', '$id_kelas', '$tgl', '$tgl'
+            '$nis', '$nama', '$telepon', '$alamat', '$jenkel', 'Active', '$id_kelas', '$tgl', '$tgl'
         )";
-        
 
         if (mysqli_query($KONEKSI, $query)) {
             $berhasil++;
         }
     }
 
+    //  Hapus file setelah selesai
     if (file_exists($filePath)) {
         unlink($filePath);
     }
 
-    return $berhasil;
+
+
+    return [
+        'success' => true,
+        'count' => $berhasil
+    ];
 }

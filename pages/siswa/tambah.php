@@ -25,6 +25,8 @@
         if (isset($_POST['tambah'])) {
             include "proses_tambah.php";
         }
+        $last_kid = tampil("SELECT nis FROM tbl_siswa ORDER BY nis DESC LIMIT 1");
+        $last_kid = substr($last_kid[0]['nis'],4);
         $tahun = tampil("SELECT `tbl_tahun_ajaran`.`simbol_tahun_ajaran` FROM `tbl_tahun_ajaran` WHERE status = 'Active'");
         $kelas = tampil("SELECT tbl_kelas.id_kelas, tbl_kelas.tingkat, CONCAT( tbl_jurusan.simbol_jur, ' ( ', tbl_tahun_ajaran.semester_ganjil, ' - ', tbl_tahun_ajaran.semester_genap, ' ) ' ) AS nama_kelas FROM tbl_kelas LEFT JOIN tbl_jurusan ON tbl_kelas.jurusan = tbl_jurusan.id_jurusan LEFT JOIN tbl_tahun_ajaran ON tbl_kelas.id_tahun_ajaran = tbl_tahun_ajaran.id_tahun_ajaran WHERE status ='Active' ORDER BY nama_kelas ASC,tbl_kelas.tingkat ASC");
         ?>
@@ -38,7 +40,7 @@
                             <div class="row g-2">
                                 <div class="mb-3  col-md-6">
                                     <label for="kode" class="form-label">NIS</label>
-                                    <input type="text" class="form-control" readonly id="kode" name="kode" value="<?= autonum("tbl_siswa", "nis", 6, $tahun[0]['simbol_tahun_ajaran']) ?>" placeholder="NIP.......">
+                                    <input type="text" class="form-control" readonly id="kode" name="kode" value="<?= $tahun[0]['simbol_tahun_ajaran'].str_pad($last_kid+1,6,"0",STR_PAD_LEFT)  ?>" placeholder="NIP.......">
                                 </div>
                                 <div class="mb-3  col-md-6">
                                     <label for="name" class="form-label">Nama</label>
